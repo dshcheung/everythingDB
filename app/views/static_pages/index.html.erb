@@ -1,11 +1,33 @@
-<div class="container">
+<div class="container" ng-controller="NameCtrl">
   <div class="row">
     <div class="col-xs-12 text-center">
       <h1>HIHI</h1>
-      <form>
-        <input ng-model="name">
+
+      <h2>
+        <ol>
+          <li ng-repeat="name in names track by $index">
+            {{name}}
+          </li>
+        </ol>
+      </h2>
+
+      <div id="priceChart"></div>
+
+      <form ng-submit="addName()">
+        <input ng-model="enteredName">
       </form>
-      <h2>{{ name }}</h2>
+
+      <table class="table table-condense">
+        <tr ng-repeat="price in prices track by $index">
+          <td>
+            {{price[0]}}
+          </td>
+          <td>
+            {{price[1]}}
+          </td>
+        </tr>
+      </table>
+
     </div>
   </div>
 </div>
