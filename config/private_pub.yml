@@ -5,6 +5,6 @@ test:
   server: "http://localhost:9292/faye"
   secret_token: "secret"
 production:
-  server: "http://dimsumcloud-pubsub.herokuapp.com/faye"
+  server: "https://dimsumcloud-pubsub.herokuapp.com/faye"
   secret_token: "77eceb2b056130ec1d84903ca612a2995bfbf787f22cfd096bd7b122057b3224"
   signature_expiration: 3600 # one hour
