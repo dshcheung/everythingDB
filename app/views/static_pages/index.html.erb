@@ -17,6 +17,19 @@
         <input ng-model="enteredName">
       </form>
 
+      <%= subscribe_to "/messages/new" %>
+
+      <ul id="messages_list">
+        <% Message.all.each do |message| %>
+          <li><%= message.content %></li>
+        <% end %>
+      </ul>
+
+      <%= form_for Message.new, :remote => true do |f| %>
+        <%= f.text_field :content, :placeholder => "message" %>
+        <%= f.submit "Send" %>
+      <% end %>
+
       <table class="table table-condense">
         <tr ng-repeat="price in prices track by $index">
           <td>
