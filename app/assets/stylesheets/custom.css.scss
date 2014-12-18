@@ -1,0 +1,19 @@
+#body_background{
+  // background-color: #333330;
+}
+
+.sidebar{
+  top: 0px;
+}
+
+#messages_box{
+  height: 95%;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+#message_input_form{
+  input:focus {
+      outline:none;
+  }
+}
