@@ -1,5 +1,5 @@
 function scrollToBottomOfMessages(){
-  $('#messages_box').animate({ scrollTop: $('#messages_box').prop('scrollHeight') }, 'slow');
+  $('#messages_box').scrollTop($('#messages_box').prop('scrollHeight'));
 }
 
 function randomNumGen(lower, upper){

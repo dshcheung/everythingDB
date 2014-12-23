@@ -3,11 +3,12 @@
 <div class="container-fluid">
   <div class="row">
 
-    <div class="col-xs-8 main">
+    <div class="col-xs-9 main">
+      
       <div id="priceChart"></div>
     </div>
 
-    <div class="col-xs-4 col-xs-offset-8 sidebar">
+    <div class="col-xs-3 col-xs-offset-9 sidebar">
       <div id="messages_box">
         <ul id="messages_list">
           <% Message.all.each do |message| %>
@@ -19,7 +20,7 @@
       <div id="message_input_form">
         <%= form_for Message.new, :remote => true do |f| %>
           <%= f.text_field :content, :placeholder => "message", :class => "col-xs-8" %>
-          <%= f.submit "Send", :class => "col-xs-4" %>
+          <%= f.submit "Send", :class => "col-xs-4", :data => { disable_with: 'Submitting...' } %>
         <% end %>
       </div>
     </div>

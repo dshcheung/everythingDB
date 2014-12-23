@@ -13,11 +13,15 @@ $(document).ready(function(){
     });
 
     $('#priceChart').highcharts('StockChart', {
-      rangeSelector : {
-        selected : 1
+      chart: {
+        backgroundColor: 'transparent',
+        color: 'white'
       },
-      title : {
-        text : 'Bitcoin Price'
+      rangeSelector : {
+        selected: 1
+      },
+      title: {
+        text: 'Bitcoin Price'
       },
       xAxis: {
         millisecond: '%H:%M:%S.%L',
@@ -29,9 +33,9 @@ $(document).ready(function(){
         month: '%b \'%y',
         year: '%Y'
       },
-      series : [{
-        name : 'Bitcoin',
-        data : parsed_data,
+      series: [{
+        name: 'Bitcoin',
+        data: parsed_data,
         tooltip: {
             valueDecimals: 2
         }
