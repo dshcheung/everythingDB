@@ -11,10 +11,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141217144534) do
+ActiveRecord::Schema.define(version: 20141223100825) do
 
   create_table "messages", force: true do |t|
     t.string   "content"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "tickers", force: true do |t|
+    t.decimal  "mid"
+    t.decimal  "bid"
+    t.decimal  "ask"
+    t.decimal  "last_price"
+    t.decimal  "low"
+    t.decimal  "high"
+    t.decimal  "volume"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

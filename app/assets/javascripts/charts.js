@@ -1,45 +1,67 @@
 $(document).ready(function(){
-  $.getJSON('https://www.quandl.com/api/v1/datasets/BAVERAGE/BITFINEXUSD.json?auth_token=t5T8nLRsoMJYMnXzeASD', function (response) {
+
+  var data;
+
+  function graphChart(data){
+    Highcharts.setOptions({
+        global: {
+            useUTC : false
+        }
+    });
 
     // Create the chart
-    var received_data = response.data.reverse();
-    var parsed_data = [];
-
-    received_data.forEach(function(item){
-      var time = new Date(item[0]).getTime();
-      var price = item[1];
-      parsed_data.push([time, price]);
-
-    });
-
     $('#priceChart').highcharts('StockChart', {
       chart: {
-        backgroundColor: 'transparent',
-        color: 'white'
+        backgroundColor: 'transparent'
       },
-      rangeSelector : {
-        selected: 1
+
+      rangeSelector: {
+        buttons: [{
+          count: 4,
+          type: 'minute',
+          text: '1M'
+        }, {
+          count: 20,
+          type: 'minute',
+          text: '5M'
+        }, {
+          type: 'all',
+          text: 'All'
+        }],
+        inputEnabled: false,
+        selected: 0
       },
-      title: {
-        text: 'Bitcoin Price'
-      },
+
       xAxis: {
-        millisecond: '%H:%M:%S.%L',
-        second: '%H:%M:%S',
-        minute: '%H:%M',
-        hour: '%H:%M',
-        day: '%e. %b',
-        week: '%e. %b',
-        month: '%b \'%y',
-        year: '%Y'
-      },
-      series: [{
-        name: 'Bitcoin',
-        data: parsed_data,
-        tooltip: {
-            valueDecimals: 2
+        type: {
+          millisecond: '%H:%M:%S.%L',
+          second: '%H:%M:%S',
+          minute: '%H:%M',
+          hour: '%H:%M',
+          day: '%e. %b',
+          week: '%e. %b',
+          month: '%b \'%y',
+          year: '%Y'
         }
+      },
+
+      title: {
+        text: 'Bitfinex Live Data'
+      },
+
+      exporting: {
+        enabled: false
+      },
+
+      series: [{
+        name: 'Bitfinex',
+        data: data
       }]
     });
-  });
+  }
+
+  $.getJSON('/tickers.json', function(data){
+    graphChart(data);
+  })
+
 });

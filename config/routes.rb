@@ -9,6 +9,8 @@ Rails.application.routes.draw do
 
   resources :messages, only: :create
 
+  resources :tickers
+
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 
