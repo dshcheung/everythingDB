@@ -52,6 +52,9 @@ gem 'roo'
 # Active Hash using yaml files
 gem 'active_hash'
 
+# Pass variables to JS
+gem 'gon'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

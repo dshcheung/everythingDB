@@ -9,12 +9,12 @@ Rails.application.routes.draw do
 
   resources :messages, only: :create
 
-  resources :tickers
+  resources :tickers, only: :index
   
-  resources :daily_quotes
+  resources :daily_quotes, only: :show
 
-  resources :companies
-  
+  resources :companies, only: [:show, :index]
+
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

@@ -1,8 +1,19 @@
 <h1><%= @company.name %></h1>
 <h2><%= @company.symbol %></h2>
 
+<div id="companyPriceChart"></div>
+
 <table class="table table-condensed">
-  <% @company.daily_quotes.each do |q| %>
+  <tr>
+    <th>Date</th>
+    <th>Open</th>
+    <th>High</th>
+    <th>Low</th>
+    <th>Close</th>
+    <th>Volume</th>
+    <th>Adjusted Close</th>
+  </tr>
+  <% @company.daily_quotes.first(100).each do |q| %>
     <tr>
       <td><%= q.date %></td>
       <td><%= q.open %></td>
