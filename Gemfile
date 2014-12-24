@@ -45,6 +45,9 @@ end
 # Account Management
 gem 'devise'
 
+# Scraping documents
+gem 'nokogiri'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

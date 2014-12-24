@@ -11,7 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141223100825) do
+ActiveRecord::Schema.define(version: 20141224084247) do
+
+  create_table "daily_quotes", force: true do |t|
+    t.datetime "date"
+    t.decimal  "open"
+    t.decimal  "high"
+    t.decimal  "low"
+    t.decimal  "close"
+    t.integer  "volume"
+    t.decimal  "adj_close"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "messages", force: true do |t|
     t.string   "content"
