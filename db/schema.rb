@@ -11,7 +11,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141224084247) do
+ActiveRecord::Schema.define(version: 20141224085634) do
+
+  create_table "companies", force: true do |t|
+    t.integer  "exchange_id"
+    t.string   "symbol"
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "daily_quotes", force: true do |t|
     t.datetime "date"
@@ -21,6 +29,7 @@ ActiveRecord::Schema.define(version: 20141224084247) do
     t.decimal  "close"
     t.integer  "volume"
     t.decimal  "adj_close"
+    t.integer  "company_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

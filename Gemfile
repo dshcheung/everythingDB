@@ -47,6 +47,10 @@ gem 'devise'
 
 # Scraping documents
 gem 'nokogiri'
+gem 'roo'
+
+# Active Hash using yaml files
+gem 'active_hash'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

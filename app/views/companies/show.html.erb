@@ -1,0 +1,16 @@
+<h1><%= @company.name %></h1>
+<h2><%= @company.symbol %></h2>
+
+<table class="table table-condensed">
+  <% @company.daily_quotes.each do |q| %>
+    <tr>
+      <td><%= q.date %></td>
+      <td><%= q.open %></td>
+      <td><%= q.high %></td>
+      <td><%= q.low %></td>
+      <td><%= q.close %></td>
+      <td><%= q.volume %></td>
+      <td><%= q.adj_close %></td>
+    </tr>
+  <% end %>
+</table>

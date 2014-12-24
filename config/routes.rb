@@ -10,7 +10,11 @@ Rails.application.routes.draw do
   resources :messages, only: :create
 
   resources :tickers
+  
+  resources :daily_quotes
 
+  resources :companies
+  
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 
