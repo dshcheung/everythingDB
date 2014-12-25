@@ -8,11 +8,16 @@ namespace :stock do
 
     exchange = Exchange.find(1)
     exchange_symbol = exchange.symbol.downcase
-    companies = exchange.companies
+    companies = exchange.companies.where(:status => nil)
 
     companies.find_each(:batch_size => 5) do |company|
-      if company.daily_quotes.any?
-        next
+      
+      ActiveRecord::Base.transaction do
+        if company.status == "in progress" or company.status == "done"
+          next
+        end
+
+        company.update(:status => "in progress")
       end
       
       stock = company.symbol
@@ -22,21 +27,21 @@ namespace :stock do
       data = CSV.parse(data)
       data = data[1..-1]
 
-      ActiveRecord::Base.transaction do
-        data.each do |d|
-          new_quote = company.daily_quotes.new
+      data.each do |d|
+        new_quote = company.daily_quotes.new
 
-          new_quote.date = d[0]
-          new_quote.open = d[1]
-          new_quote.high = d[2]
-          new_quote.low = d[3]
-          new_quote.close = d[4]
-          new_quote.volume = d[5]
-          new_quote.adj_close = d[6]
+        new_quote.date = d[0]
+        new_quote.open = d[1]
+        new_quote.high = d[2]
+        new_quote.low = d[3]
+        new_quote.close = d[4]
+        new_quote.volume = d[5]
+        new_quote.adj_close = d[6]
 
-          new_quote.save
-        end
+        new_quote.save
       end
+
+      company.update(:status => "done")
 
       puts "#{company.name} - Success"
 
