@@ -10,7 +10,7 @@ namespace :stock do
     exchange_symbol = exchange.symbol.downcase
     companies = exchange.companies
 
-    companies.each do |company|
+    companies.find_each(:batch_size => 5) do |company|
       if company.daily_quotes.any?
         next
       end
