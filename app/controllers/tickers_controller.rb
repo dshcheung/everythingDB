@@ -1,5 +1,5 @@
 class TickersController < ApplicationController
   def index
-    @tickers = Ticker.all.last(900)
+    @tickers = Ticker.all
   end
 end

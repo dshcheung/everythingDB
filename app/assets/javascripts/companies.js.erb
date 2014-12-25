@@ -3,10 +3,24 @@ $(document).ready(function(){
   var data;
 
   function graphChart(data){
+    var volume = [];
+
     Highcharts.setOptions({
         global: {
             useUTC : false
         }
+    });
+
+    groupingUnits = [[
+        'week',                         // unit name
+        [1]                             // allowed multiples
+    ], [
+        'month',
+        [1, 2, 3, 4, 6]
+    ]];
+
+    data.forEach(function(element){
+      volume.push([element[0],element[5]]);
     });
 
     // Create the chart
@@ -16,18 +30,6 @@ $(document).ready(function(){
       },
 
       rangeSelector: {
-        buttons: [{
-          count: 4,
-          type: 'minute',
-          text: '1M'
-        }, {
-          count: 20,
-          type: 'minute',
-          text: '5M'
-        }, {
-          type: 'all',
-          text: 'All'
-        }],
         inputEnabled: false,
         selected: 0
       },
@@ -45,8 +47,32 @@ $(document).ready(function(){
         }
       },
 
+      yAxis: [{
+        labels: {
+            align: 'right',
+            x: -3
+        },
+        title: {
+            text: 'OHLC'
+        },
+        height: '80%',
+        lineWidth: 2
+      }, {
+        labels: {
+            align: 'right',
+            x: -3
+        },
+        title: {
+            text: 'Volume'
+        },
+        top: '65%',
+        height: '35%',
+        offset: 0,
+        lineWidth: 2
+      }],
+
       title: {
-        text: 'Bitfinex Live Data'
+        text: 'Daily Quotes'
       },
 
       exporting: {
@@ -54,8 +80,20 @@ $(document).ready(function(){
       },
 
       series: [{
-        name: 'Bitfinex',
-        data: data
+        name: 'Daily Quote',
+        type: 'candlestick',
+        data: data,
+        dataGrouping: {
+          units: groupingUnits
+        }
+      }, {
+        type: 'column',
+        name: 'Volume',
+        data: volume,
+        yAxis: 1,
+        dataGrouping: {
+            units: groupingUnits
+        }
       }]
     });
   }
