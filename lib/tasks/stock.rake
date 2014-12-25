@@ -11,6 +11,10 @@ namespace :stock do
     companies = exchange.companies
 
     companies.each do |company|
+      if company.daily_quotes.any?
+        next
+      end
+      
       stock = company.symbol
       url = "http://table.finance.yahoo.com/table.csv?s=#{stock}.#{exchange_symbol}"
 
