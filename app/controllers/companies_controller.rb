@@ -7,5 +7,7 @@ class CompaniesController < ApplicationController
     @company = Company.find(params[:id])
 
     gon.company = @company
+
+    # TODO: biggest 3 historical spread (datetime, spread, volume)
   end
 end
