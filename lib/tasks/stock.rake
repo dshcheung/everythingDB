@@ -14,10 +14,12 @@ namespace :stock do
       
       ActiveRecord::Base.transaction do
         if company.status == "in progress" or company.status == "done"
+          puts "#{company.name} is already in progress or done"
           next
         end
 
         company.update(:status => "in progress")
+        puts "#{company.name} started scraping"
       end
       
       stock = company.symbol
@@ -26,6 +28,8 @@ namespace :stock do
       data = open(url)
       data = CSV.parse(data)
       data = data[1..-1]
+
+      puts "There are #{data.count} data points"
 
       data.each do |d|
         new_quote = company.daily_quotes.new
@@ -39,6 +43,8 @@ namespace :stock do
         new_quote.adj_close = d[6]
 
         new_quote.save
+
+        print "."
       end
 
       company.update(:status => "done")

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141225154558) do
+ActiveRecord::Schema.define(version: 20141226023334) do
 
   create_table "companies", force: true do |t|
     t.integer  "exchange_id"
@@ -34,6 +34,10 @@ ActiveRecord::Schema.define(version: 20141225154558) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "daily_quotes", ["company_id", "date"], name: "index_daily_quotes_on_company_id_and_date"
+  add_index "daily_quotes", ["company_id"], name: "index_daily_quotes_on_company_id"
+  add_index "daily_quotes", ["date"], name: "index_daily_quotes_on_date"
 
   create_table "messages", force: true do |t|
     t.string   "content"
