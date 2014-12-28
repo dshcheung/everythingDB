@@ -30,9 +30,4 @@ function screenTextAnimation(content){
 
 $(document).ready(function(){
   scrollToBottomOfMessages();
-
-  PrivatePub.subscribe("/tickers/new", function(data, channel) {
-    // console.log(data);
-    $('#priceChart').highcharts().series[0].addPoint([data.message.x * 1000, data.message.y],true, true)
-  });
 });

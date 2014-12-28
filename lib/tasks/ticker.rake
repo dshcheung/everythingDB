@@ -15,7 +15,7 @@ namespace :ticker do
       
       if ticker.save
         puts ticker
-        PrivatePub.publish_to "/tickers/new", :message => { x: ticker.created_at.to_i, y: ticker.last_price.to_f }
+        PrivatePub.publish_to "/tickers/new", :message => { timestamp: ticker.created_at.to_i * 1000, last_price: ticker.last_price.to_f, mid: ticker.mid.to_f, bid: ticker.bid.to_f, ask: ticker.ask.to_f }
       else
         puts "failed"
       end
