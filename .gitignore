@@ -17,6 +17,9 @@
 
 # Ignore application configuration
 /config/application.yml
+/config/newrelic.yml
+/config/private_pub.yml
+/config/secrets.yml
 .env
 
 .DS_Store

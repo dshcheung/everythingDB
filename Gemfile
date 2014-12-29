@@ -55,6 +55,9 @@ gem 'active_hash'
 # Pass variables to JS
 gem 'gon'
 
+# App Production Performance Monitor
+gem 'newrelic_rpm'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
