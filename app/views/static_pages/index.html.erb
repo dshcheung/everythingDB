@@ -1,52 +1,26 @@
 <%= subscribe_to "/messages/new" %>
 <%= subscribe_to "/tickers/new" %>
 
-<div class="container-fluid">
-  <div class="row">
+<div id="priceChart"></div>
 
-    <div class="col-xs-9 main">
-      
-      <div id="priceChart"></div>
+<div>
+  <span>Last Price</span>
+  <span id="last_price">Loading...</span>
+</div>
 
-      <div>
-        <span>Last Price</span>
-        <span id="last_price">Loading...</span>
-      </div>
+<div>
+  <span>Mid Price</span>
+  <span id="mid_price">Loading...</span>
+</div>
 
-      <div>
-        <span>Mid Price</span>
-        <span id="mid_price">Loading...</span>
-      </div>
+<div>
+  <span>Bid Price</span>
+  <span id="bid_price">Loading...</span>
+</div>
 
-      <div>
-        <span>Bid Price</span>
-        <span id="bid_price">Loading...</span>
-      </div>
-
-      <div>
-        <span>Ask Price</span>
-        <span id="ask_price">Loading...</span>
-      </div>
-    </div>
-
-    <div class="col-xs-3 col-xs-offset-9 sidebar">
-      <div id="messages_box">
-        <ul id="messages_list">
-          <% Message.all.each do |message| %>
-            <li><%= message.content %></li>
-          <% end %>
-        </ul>
-      </div>
-
-      <div id="message_input_form">
-        <%= form_for Message.new, :remote => true do |f| %>
-          <%= f.text_field :content, :placeholder => "message", :class => "col-xs-8" %>
-          <%= f.submit "Send", :class => "col-xs-4", :data => { disable_with: 'Submitting...' } %>
-        <% end %>
-      </div>
-    </div>
-
-  </div>
+<div>
+  <span>Ask Price</span>
+  <span id="ask_price">Loading...</span>
 </div>
 
 <div id="screen_texts">

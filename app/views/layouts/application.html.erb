@@ -13,7 +13,40 @@
 </head>
 <body id="body_background">
 
-<%= yield %>
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+      <ul class="nav navbar-nav">
+        <li><%= link_to "首页", root_path %></li>
+        <li><%= link_to "深圳股票", companies_path %></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-xs-10 main" style="padding-top:70px;">
+        <%= yield %>
+      </div>
+
+      <div class="col-xs-2 col-xs-offset-10 sidebar" style="padding-top:70px;">
+        <div id="messages_box">
+          <ul id="messages_list">
+            <% Message.all.each do |message| %>
+              <li><%= message.content %></li>
+            <% end %>
+          </ul>
+        </div>
+
+        <div id="message_input_form">
+          <%= form_for Message.new, :remote => true do |f| %>
+            <%= f.text_field :content, :placeholder => "message", :class => "col-xs-8" %>
+            <%= f.submit "Send", :class => "col-xs-4", :data => { disable_with: 'Submitting...' } %>
+          <% end %>
+        </div>
+      </div>
+
+    </div>
+  </div>
 
 </body>
 </html>

@@ -272,7 +272,7 @@ $(document).ready(function(){
       },
 
       title: {
-        text: 'Bitfinex Live Data'
+        text: '比特币 现价 (Bitfinex)'
       },
 
       exporting: {
