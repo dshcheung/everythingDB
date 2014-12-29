@@ -41,6 +41,7 @@ class CompaniesController < ApplicationController
   protected
 
   def check_gain(quote)
-    return (quote.close - quote.open) / quote.open >= 0.05
+    # need to ensure volume is greater than 0 on that day
+    return (quote.close - quote.open) / quote.open >= 0.05 && quote.volume > 0
   end
 end

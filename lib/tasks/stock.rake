@@ -11,10 +11,11 @@ namespace :stock do
     companies = exchange.companies
 
     companies.find_each(:batch_size => 5) do |company|
+      stock = company.symbol
+      url = "http://table.finance.yahoo.com/table.csv?s=#{stock}.#{exchange_symbol}"
 
       catch (:done)  do
         ActiveRecord::Base.transaction do
-
           case company.status
           when "in progress", "done", "no data"
             puts "#{company.name} is already in progress or done or no data"
@@ -23,23 +24,30 @@ namespace :stock do
             company.update(:status => "in progress")
             puts "#{company.name} started scraping"
           end
-
-          # if company.status == "in progress" or company.status == "done" or company.status == "no data"
-          #   puts "#{company.name} is already in progress or done"
-          #   throw :done
-          # else
-          #   company.update(:status => "in progress")
-          #   puts "#{company.name} started scraping"
-          # end
         end
-        
-        stock = company.symbol
-        url = "http://table.finance.yahoo.com/table.csv?s=#{stock}.#{exchange_symbol}"
 
         begin
           data = open(url)
           data = CSV.parse(data)
           data = data[1..-1]
+
+          latest_date = company.daily_quotes.order(:date).last.date
+
+          i = 0
+          data.each do |d|
+            if d[0].to_datetime > latest_date
+              i += 1
+            end
+          end
+
+          if i == 0
+            puts "#{company.name} is already up to date"
+            company.update(:status => "done")
+            throw :done
+          else
+            data = data[0..i-1]
+          end
+
         rescue
           puts  "Cannot find data for #{company.name}"
           company.update(:status => "no data")
@@ -59,26 +67,17 @@ namespace :stock do
           new_quote.volume = d[5]
           new_quote.adj_close = d[6]
 
-          new_quote.save
-
-          print "."
+          if new_quote.save
+            print "."
+          else
+            print "x"
+          end
         end
 
         ActiveRecord::Base.transaction do
           company.update(:status => "done")
           puts "#{company.name} - Success"
         end
-        
-        # company_id = company.id
-
-        # data.each_slice(500) do |data_chunk|
-        #   inserts = []
-        #   data_chunk.each do |d|
-        #     inserts.push "(#{company_id}, #{d[0]}, #{d[1]}, #{d[2]}, #{d[3]}, #{d[4]}, #{d[5]}, #{d[6]})"
-        #   end
-        #   sql = "INSERT INTO daily_quotes ('company_id', 'date', 'open', 'high', 'low', 'close', 'volume', 'adj_close') VALUES #{inserts.join(", ")}"
-        #   CONN.execute sql
-        # end
       end
     end
 
