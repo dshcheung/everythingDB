@@ -3,7 +3,7 @@
 <div id="companyPriceChart"></div>
 
 <div>
-  <% @connected_quote_arr.each do |group| %>
+  <% @connected_quote_arr.reverse.each do |group| %>
     <table class="table table-condensed">
       <tr>
         <th>日期</th>
@@ -17,7 +17,7 @@
 
       <% group.each do |quote| %>
         <tr>
-          <td><%= quote.date %></td>
+          <td><%= quote.date.to_date %></td>
           <td><%= "#{ ((quote.close - quote.open) / quote.open * 100).round(2) } %" %></td>
           <td><%= quote.open %></td>
           <td><%= quote.close %></td>
@@ -30,10 +30,10 @@
   <% end %>
 </div>
 
-<!-- 
-<table class="table table-condensed">
+<!-- <table class="table table-condensed">
   <tr>
     <th>Date</th>
+    <th>%</th>
     <th>Open</th>
     <th>High</th>
     <th>Low</th>
@@ -41,9 +41,10 @@
     <th>Volume</th>
     <th>Adjusted Close</th>
   </tr>
-  <% @company.daily_quotes.first(100).each do |q| %>
+  <% @company.daily_quotes.where("volume > 0").order(:date).reverse.each do |q| %>
     <tr>
-      <td><%= q.date %></td>
+      <td><%= q.date.to_date %></td>
+      <td><%= ((q.close - q.open) / q.open * 100).round(2) %></td>
       <td><%= q.open %></td>
       <td><%= q.high %></td>
       <td><%= q.low %></td>

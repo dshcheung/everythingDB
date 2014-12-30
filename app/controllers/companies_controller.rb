@@ -11,11 +11,12 @@ class CompaniesController < ApplicationController
     # TODO: biggest 3 historical spread (datetime, spread, volume)
     @connected_quote_arr = []
     temp_quote_arr = []
-    all_quotes = @company.daily_quotes
+    all_quotes = @company.daily_quotes.where("volume > 0").order(:date)
 
     if all_quotes.any?
       all_quotes.each_with_index do |quote, index|
         if index == all_quotes.length - 1
+          @connected_quote_arr << temp_quote_arr if temp_quote_arr.any?
           return
         end
 
@@ -42,6 +43,7 @@ class CompaniesController < ApplicationController
 
   def check_gain(quote)
     # need to ensure volume is greater than 0 on that day
-    return (quote.close - quote.open) / quote.open >= 0.05 && quote.volume > 0
+    percentage = params[:percentage] || 0.05
+    return (quote.close - quote.open) / quote.open >= percentage.to_d && quote.volume > 0
   end
 end

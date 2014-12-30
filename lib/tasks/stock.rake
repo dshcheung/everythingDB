@@ -8,7 +8,7 @@ namespace :stock do
 
     exchange = Exchange.find(1)
     exchange_symbol = exchange.symbol.downcase
-    companies = exchange.companies
+    companies = exchange.companies.where(:symbol => "300311")
 
     companies.find_each(:batch_size => 5) do |company|
       stock = company.symbol
@@ -31,21 +31,23 @@ namespace :stock do
           data = CSV.parse(data)
           data = data[1..-1]
 
-          latest_date = company.daily_quotes.order(:date).last.date
-
-          i = 0
-          data.each do |d|
-            if d[0].to_datetime > latest_date
-              i += 1
+          if company.daily_quotes.count > 0
+            latest_date = company.daily_quotes.order(:date).last.date
+            
+            i = 0
+            data.each do |d|
+              if d[0].to_datetime > latest_date
+                i += 1
+              end
             end
-          end
 
-          if i == 0
-            puts "#{company.name} is already up to date"
-            company.update(:status => "done")
-            throw :done
-          else
-            data = data[0..i-1]
+            if i == 0
+              puts "#{company.name} is already up to date"
+              company.update(:status => "done")
+              throw :done
+            else
+              data = data[0..i-1]
+            end
           end
 
         rescue
@@ -80,6 +82,8 @@ namespace :stock do
         end
       end
     end
+
+    Company.update_all(:status => nil)
 
   end
 
