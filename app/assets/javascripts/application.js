@@ -16,4 +16,6 @@
 //= require angular
 //= require angular-animate
 //= require angular-resource
+//= require webcomponentsjs/webcomponents
+//= require platform/platform
 //= require_tree .

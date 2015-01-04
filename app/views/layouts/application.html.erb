@@ -1,13 +1,16 @@
 <!DOCTYPE html>
-<html ng-app="dimSumApp">
+<html ng-app="moneyDB">
 <head>
   <title>Bit KungFu</title>
   
   <%= include_gon(:init => true) %>
   <%= stylesheet_link_tag    'application', media: 'all' %>
   <%= javascript_include_tag 'application' %>
+  <%= html_import_tag 'application' %>
   <script type="text/javascript" src="https://code.jquery.com/ui/1.11.2/jquery-ui.min.js"></script>
   <script src="https://code.highcharts.com/stock/highstock.js"></script> 
+
+  <%= html_import_tag "application" %>
 
   <%= csrf_meta_tags %>
 </head>

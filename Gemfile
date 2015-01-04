@@ -1,5 +1,7 @@
 source 'https://rubygems.org'
 
+ruby '2.1.2'
+
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.1.6'
 # Use postgresql as the database for Production
@@ -35,6 +37,12 @@ gem "thin"
 
 # For JSON request
 gem 'httparty'
+
+# Material UI
+# gem 'polymer-rails', '~> 0.2.5'
+gem 'bower-rails'
+gem 'emcee'
+gem 'rails_12factor', group: :production
 
 group :development do
   gem 'better_errors'
