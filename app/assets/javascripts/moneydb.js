@@ -1,4 +1,4 @@
-var moneyDb = angular.module('moneyDB', []);
+var moneyDb = angular.module('moneyDB', ['ng-polymer-elements']);
 
 // moneyDb.controller('NameCtrl', function($scope, $http){
 //   $scope.names = ['harry', 'victor'];

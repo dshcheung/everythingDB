@@ -1,7 +1,7 @@
 <paper-checkbox checked></paper-checkbox>
 
 <table class="table table-condensed" ng-controller="CompanyCtrl">
-  <input ng-model="name" />
+  <paper-input label="搜索公司" ng-model="name"></paper-input>
 
   <tr ng-repeat="company in companies | filter:name">
     <td>{{company[0]}}</td>

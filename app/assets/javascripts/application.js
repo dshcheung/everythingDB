@@ -18,4 +18,5 @@
 //= require angular-resource
 //= require webcomponentsjs/webcomponents
 //= require platform/platform
+//= require ng-polymer-elements/ng-polymer-elements
 //= require_tree .
