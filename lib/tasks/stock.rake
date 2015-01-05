@@ -8,7 +8,7 @@ namespace :stock do
 
     exchange = Exchange.find(1)
     exchange_symbol = exchange.symbol.downcase
-    companies = exchange.companies.where(:symbol => "300311")
+    companies = exchange.companies
 
     companies.find_each(:batch_size => 5) do |company|
       stock = company.symbol
