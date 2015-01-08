@@ -11,78 +11,73 @@ class StaticPagesController < ApplicationController
     @nine_or_more_percent = []
     @ten_or_more_percent = []
 
-    one_day_ago = DailyQuote.where("volume > 0").order(:date).last.date
+    two_days_ago = Company.first.daily_quotes.where("volume > 0").order(:date).last(2).first.date
 
-    @daily_quotes = DailyQuote.where("volume > 0").where("date >= ?", one_day_ago)
+    daily_quotes ||= DailyQuote.where("volume > ? AND date >= ?", 0, two_days_ago).order(:company_id)
+    
+    companies ||= daily_quotes.select(:company_id).group(:company).having("count(*) > 1").count
 
-    @daily_quotes.each do |q|
-      if check_gain(q, 0.1)
-        @ten_or_more_percent << q
-      elsif check_gain(q, 0.09)
-        @nine_or_more_percent << q
-      elsif check_gain(q, 0.08)
-        @eight_or_more_percent << q
-      elsif check_gain(q, 0.07)
-        @seven_or_more_percent << q
-      elsif check_gain(q, 0.06)
-        @six_or_more_percent << q
-      elsif check_gain(q, 0.05)
-        @five_or_more_percent << q
+    companies.each do |company, value|
+      quotes = daily_quotes.where(:company_id => company.id).last(2)
+      q1 = quotes[0]
+      q2 = quotes[1]
+
+      if check_gain(q1, q2, 0.1)
+        @ten_or_more_percent << company
+      elsif check_gain(q1, q2, 0.09)
+        @nine_or_more_percent << company
+      elsif check_gain(q1, q2, 0.08)
+        @eight_or_more_percent << company
+      elsif check_gain(q1, q2, 0.07)
+        @seven_or_more_percent << company
+      elsif check_gain(q1, q2, 0.06)
+        @six_or_more_percent << company
+      elsif check_gain(q1, q2, 0.05)
+        @five_or_more_percent << company
       end
     end
   end
 
   def two_day_five_percent 
-    @five_or_more_percent = Hash.new 0
-    @six_or_more_percent = Hash.new 0
-    @seven_or_more_percent = Hash.new 0
-    @eight_or_more_percent = Hash.new 0
-    @nine_or_more_percent = Hash.new 0
-    @ten_or_more_percent = Hash.new 0
+    @five_or_more_percent = []
+    @six_or_more_percent = []
+    @seven_or_more_percent = []
+    @eight_or_more_percent = []
+    @nine_or_more_percent = []
+    @ten_or_more_percent = []
 
-    two_days_ago = Company.first.daily_quotes.where("volume > 0").order(:date).last(2).first.date
+    three_days_ago = Company.first.daily_quotes.where("volume > 0").order(:date).last(3).first.date
+    
+    daily_quotes ||= DailyQuote.where("volume > ? AND date >= ?", 0, three_days_ago).order(:company_id)
+    
+    companies ||= daily_quotes.select(:company_id).group(:company).having("count(*) > 1").count
 
-    @daily_quotes = DailyQuote.where("volume > 0").where("date >= ?", two_days_ago)
+    companies.each do |company, value|
+      quotes = daily_quotes.where(:company_id => company.id).last(3)
+      q1 = quotes[0]
+      q2 = quotes[1]
+      q3 = quotes[2]
 
-    @daily_quotes.each do |q|
-      if check_gain(q, 0.1)
-        @ten_or_more_percent[q.company] += 1
-      end
-
-      if check_gain(q, 0.09)
-        @nine_or_more_percent[q.company] += 1
-      end
-
-      if check_gain(q, 0.08)
-        @eight_or_more_percent[q.company] += 1
-      end
-
-      if check_gain(q, 0.07)
-        @seven_or_more_percent[q.company] += 1
-      end
-
-      if check_gain(q, 0.06)
-        @six_or_more_percent[q.company] += 1
-      end
-
-      if check_gain(q, 0.05)
-        @five_or_more_percent[q.company] += 1
+      if check_gain(q1, q2, 0.1) and check_gain(q2, q3, 0.1)
+        @ten_or_more_percent << company
+      elsif check_gain(q1, q2, 0.09) and check_gain(q2, q3, 0.09)
+        @nine_or_more_percent << company
+      elsif check_gain(q1, q2, 0.08) and check_gain(q2, q3, 0.08)
+        @eight_or_more_percent << company
+      elsif check_gain(q1, q2, 0.07) and check_gain(q2, q3, 0.07)
+        @seven_or_more_percent << company
+      elsif check_gain(q1, q2, 0.06) and check_gain(q2, q3, 0.06)
+        @six_or_more_percent << company
+      elsif check_gain(q1, q2, 0.05) and check_gain(q2, q3, 0.05)
+        @five_or_more_percent << company
       end
     end
-
-    @ten_or_more_percent = @ten_or_more_percent.select{ |k, v| v > 1 }.keys
-    @nine_or_more_percent = @nine_or_more_percent.select{ |k, v| v > 1 }.keys
-    @eight_or_more_percent = @eight_or_more_percent.select{ |k, v| v > 1 }.keys
-    @seven_or_more_percent = @seven_or_more_percent.select{ |k, v| v > 1 }.keys
-    @six_or_more_percent = @six_or_more_percent.select{ |k, v| v > 1 }.keys
-    @five_or_more_percent = @five_or_more_percent.select{ |k, v| v > 1 }.keys
-
   end
 
   protected
 
-    def check_gain(quote, gain)
+    def check_gain(q1, q2, gain)
       # need to ensure volume is greater than 0 on that day
-      return (quote.close - quote.open) / quote.open >= gain && quote.volume > 0
+      return (q2.close - q1.close) / q1.close >= gain
     end
 end

@@ -15,10 +15,20 @@
         <th>交易量</th>
       </tr>
 
-      <% group.each do |quote| %>
+      <% group.reverse! %>
+
+      <% group.each_with_index do |quote, index| %>
         <tr>
           <td><%= quote.date.to_date %></td>
-          <td><%= "#{ ((quote.close - quote.open) / quote.open * 100).round(2) } %" %></td>
+
+          <% if index != group.length - 1 %>
+            <td>
+              <%= "#{ ((group[index].close - group[index+1].close) / group[index+1].close * 100).round(2) } %" %>
+            </td>
+          <% else %>
+            <td> - </td>
+          <% end %>
+
           <td><%= quote.open %></td>
           <td><%= quote.close %></td>
           <td><%= quote.high %></td>

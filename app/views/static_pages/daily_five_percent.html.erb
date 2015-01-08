@@ -1,42 +1,42 @@
 <div class="col-xs-2">
   <div>涨5-5.99%</div>
-  <% @five_or_more_percent.each do |q| %>
-    <div><%= link_to "#{q.company.name} (#{q.company.symbol})", q.company %></div>
+  <% @five_or_more_percent.each do |company| %>
+    <div><%= link_to "#{company.name} (#{company.symbol})", company %></div>
   <% end %>
 </div>
 
 <div class="col-xs-2">
   <div>涨6-6.99%</div>
-  <% @six_or_more_percent.each do |q| %>
-    <div><%= link_to "#{q.company.name} (#{q.company.symbol})", q.company %></div>
+  <% @six_or_more_percent.each do |company| %>
+    <div><%= link_to "#{company.name} (#{company.symbol})", company %></div>
   <% end %>
 </div>
 
 <div class="col-xs-2">
   <div>涨7-7.99%</div>
-  <% @seven_or_more_percent.each do |q| %>
-    <div><%= link_to "#{q.company.name} (#{q.company.symbol})", q.company %></div>
+  <% @seven_or_more_percent.each do |company| %>
+    <div><%= link_to "#{company.name} (#{company.symbol})", company %></div>
   <% end %>
 </div>
 
 <div class="col-xs-2">
   <div>涨8-8.99%</div>
-  <% @eight_or_more_percent.each do |q| %>
-    <div><%= link_to "#{q.company.name} (#{q.company.symbol})", q.company %></div>
+  <% @eight_or_more_percent.each do |company| %>
+    <div><%= link_to "#{company.name} (#{company.symbol})", company %></div>
   <% end %>
 </div>
 
 <div class="col-xs-2">
   <div>涨9-9.99%</div>
-  <% @nine_or_more_percent.each do |q| %>
-    <div><%= link_to "#{q.company.name} (#{q.company.symbol})", q.company %></div>
+  <% @nine_or_more_percent.each do |company| %>
+    <div><%= link_to "#{company.name} (#{company.symbol})", company %></div>
   <% end %>
 </div>
 
 <div class="col-xs-2">
   <div>涨10以上</div>
-  <% @ten_or_more_percent.each do |q| %>
-    <div><%= link_to "#{q.company.name} (#{q.company.symbol})", q.company %></div>
+  <% @ten_or_more_percent.each do |company| %>
+    <div><%= link_to "#{company.name} (#{company.symbol})", company %></div>
   <% end %>
 </div>
 

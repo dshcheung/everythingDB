@@ -15,20 +15,22 @@ class CompaniesController < ApplicationController
 
     if all_quotes.any?
       all_quotes.each_with_index do |quote, index|
-        if index == all_quotes.length - 1
+        if index == all_quotes.length - 2
           @connected_quote_arr << temp_quote_arr if temp_quote_arr.any?
           return
         end
 
-        todays_quote = all_quotes[index]
-        tmrs_quote = all_quotes[index+1]
+        q1 = all_quotes[index]
+        q2 = all_quotes[index+1]
+        q3 = all_quotes[index+2]
 
-        if check_gain(todays_quote) and check_gain(tmrs_quote)
+        if check_gain(q1, q2) and check_gain(q2, q3)
           if temp_quote_arr == []
-            temp_quote_arr << all_quotes[index]
-            temp_quote_arr << all_quotes[index+1]
+            temp_quote_arr << q1
+            temp_quote_arr << q2
+            temp_quote_arr << q3
           else
-            temp_quote_arr << all_quotes[index+1]
+            temp_quote_arr << q3
           end
         else
           @connected_quote_arr << temp_quote_arr if temp_quote_arr.any?
@@ -41,9 +43,9 @@ class CompaniesController < ApplicationController
 
   protected
 
-  def check_gain(quote)
+  def check_gain(q1, q2)
     # need to ensure volume is greater than 0 on that day
     percentage = params[:percentage] || 0.05
-    return (quote.close - quote.open) / quote.open >= percentage.to_d && quote.volume > 0
+    return (q2.close - q1.close) / q1.close >= percentage.to_d
   end
 end

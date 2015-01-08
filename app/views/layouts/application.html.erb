@@ -17,23 +17,23 @@
 <body id="body_background">
 
   <nav class="navbar navbar-inverse navbar-fixed-top">
-    <div class="container">
+    <div class="container-fluid">
       <ul class="nav navbar-nav">
         <li><%= link_to "首页", root_path %></li>
         <li><%= link_to "深圳股票", companies_path %></li>
-        <li><%= link_to "昨日涨5-10％", daily_five_percent_path %></li>
-        <li><%= link_to "前和昨日涨5-10％", two_day_five_percent_path %></li>
+        <li><%= link_to "一天涨5-10％", daily_five_percent_path %></li>
+        <li><%= link_to "兩天涨5-10％", two_day_five_percent_path %></li>
       </ul>
     </div>
   </nav>
 
   <div class="container-fluid">
     <div class="row">
-      <div class="col-xs-12 main" style="padding-top:70px;">
+      <div class="col-xs-9 main" style="padding-top:70px;">
         <%= yield %>
       </div>
 
-<!--       <div class="col-xs-2 col-xs-offset-10 sidebar" style="padding-top:70px;">
+      <div class="col-xs-3 col-xs-offset-9 sidebar" style="padding-top:70px;">
         <div id="messages_box">
           <ul id="messages_list">
             <% Message.all.each do |message| %>
@@ -49,7 +49,7 @@
           <% end %>
         </div>
       </div>
- -->
+
     </div>
   </div>
 
