@@ -40,6 +40,19 @@
   <% end %>
 </div>
 
+<% if @annual_income_statements.any? %>
+  <table class="table table-condensed">
+    <% AnnualIncomeStatement.columns[4..88].each_with_index do |column, index| %>
+      <tr>
+        <td><%= "#{column.name}" %></td>
+        <% @annual_income_statements.each do |statement| %>
+          <td><%= statement["#{column.name}"] %></td>
+        <% end %>
+      </tr>
+    <% end %>
+  </table>
+<% end %>
+
 <!-- <table class="table table-condensed">
   <tr>
     <th>Date</th>

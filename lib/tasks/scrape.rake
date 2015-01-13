@@ -11,7 +11,7 @@ namespace :scrape do
     require 'open-uri'
     require 'nokogiri'
 
-    url = "https://www.google.com.hk/finance?q=SHE:#{company.symbol}&fstype=ii"
+    url = "http://www.google.com/finance?q=SHE:#{company.symbol}&fstype=ii"
     document = open(url).read
     html_doc = Nokogiri::HTML(document)
 
@@ -23,7 +23,8 @@ namespace :scrape do
       puts ">>>"
       return
     else
-      currency = dates[0]
+      currency = dates[0].text
+      currency = "RMB"
       year_count = dates.count - 1
     end
 
@@ -34,8 +35,18 @@ namespace :scrape do
     formats << "div.id-incannualdiv > table.gf-table.rgt > tbody > tr > td.r.rm"
 
     formats.each_with_index do |format, index|
-      period = dates[index+1]
-      # puts html_doc.css(format)
+      period = dates[index+1].text.gsub("As of ", "")
+
+      new_record =  company.annual_income_statements.new
+      new_record.currency = currency
+      new_record.period = period
+      data = html_doc.css(format)
+
+      AnnualIncomeStatement.columns[4..88].each_with_index do |column, index|
+        new_record["#{column.name}"] = data[index].text.gsub(",","")
+      end
+
+      new_record.save
     end
 
     puts "#{company.name} - finish scraping"
