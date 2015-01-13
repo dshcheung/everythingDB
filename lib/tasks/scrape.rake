@@ -18,7 +18,7 @@ namespace :scrape do
     date_format = "div.id-incannualdiv > table.gf-table.rgt > thead > tr > th"
     dates = html_doc.css(date_format)
 
-    if not dates.any?
+    if dates.count < 2
       puts "#{company.name} - no data <<<<<<<<<<<<<<<<<<<"
       puts ">>>"
       return

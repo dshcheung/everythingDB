@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150113140744) do
+ActiveRecord::Schema.define(version: 20150115080048) do
 
   create_table "annual_income_statements", force: true do |t|
     t.integer  "company_id"
@@ -136,11 +136,47 @@ ActiveRecord::Schema.define(version: 20150113140744) do
   add_index "daily_quotes", ["company_id"], name: "index_daily_quotes_on_company_id"
   add_index "daily_quotes", ["date"], name: "index_daily_quotes_on_date"
 
+  create_table "employers", force: true do |t|
+    t.string   "name"
+    t.string   "location"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "jobs", force: true do |t|
+    t.integer  "employer_id"
+    t.string   "jobsdb_id"
+    t.text     "position_about"
+    t.string   "position_name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "messages", force: true do |t|
     t.string   "content"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "restaurants", force: true do |t|
+    t.string   "title"
+    t.text     "address"
+    t.string   "phonenumber"
+    t.string   "pricerange"
+    t.text     "tags"
+    t.text     "acceptedpayment"
+    t.integer  "seating"
+    t.text     "intro"
+    t.text     "description"
+    t.string   "district_id"
+    t.string   "cuisine_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "restaurants", ["cuisine_id"], name: "index_restaurants_on_cuisine_id"
+  add_index "restaurants", ["district_id", "cuisine_id"], name: "index_restaurants_on_district_id_and_cuisine_id"
+  add_index "restaurants", ["district_id"], name: "index_restaurants_on_district_id"
 
   create_table "tickers", force: true do |t|
     t.decimal  "mid"
@@ -153,5 +189,14 @@ ActiveRecord::Schema.define(version: 20150113140744) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "youtube_urls", force: true do |t|
+    t.string   "title"
+    t.string   "youtube_code"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "youtube_urls", ["youtube_code"], name: "index_youtube_urls_on_youtube_code"
 
 end
