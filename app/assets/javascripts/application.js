@@ -16,6 +16,7 @@
 //= require angular
 //= require angular-animate
 //= require angular-resource
+//= require angular-route
 //= require webcomponentsjs/webcomponents
 //= require platform/platform
 //= require ng-polymer-elements/ng-polymer-elements

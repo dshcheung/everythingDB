@@ -4,6 +4,7 @@ Rails.application.routes.draw do
 
   # You can have the root of your site routed with "root"
   root 'static_pages#index'
+  
   get 'daily_five_percent' => 'static_pages#daily_five_percent'
   get 'two_day_five_percent' => 'static_pages#two_day_five_percent'
 

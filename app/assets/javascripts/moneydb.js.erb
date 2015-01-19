@@ -1,0 +1,38 @@
+'use strict';
+
+var moneyDb = angular.module('moneyDB', ['ng-polymer-elements', 'ngRoute']);
+
+moneyDb.config(['$routeProvider',function($routeProvider) {
+  $routeProvider.
+    when('/', {
+      templatesUrl: 'index.html',
+      controller: 'StaticPagesCtrl'
+    }).
+    when('/companies', {
+      templateUrl: '../assets/companies-list.html',
+      controller: 'CompanyListCtrl'
+    }).
+    when('/companies/:symbol', {
+      templateUrl: '../assets/companies-show.html',
+      controller: 'CompanyShowCtrl'
+    }).
+    otherwise({
+      redirectTo: '/'
+    })
+}]);
+
+moneyDb.controller('StaticPages', ['', function(){
+  
+}])
+
+moneyDb.controller('CompanyListCtrl', ['$scope', '$http', function($scope, $http){
+  $http.get('companies.json').success(function(data) {
+    $scope.companies = data.companies;
+  });
+}]);
+
+moneyDb.controller('CompanyShowCtrl', ['$scope', '$http', '$routeParams', function($scope, $http, $routeParams){
+  $http.get('companies/'+$routeParams.symbol+'.json').success(function(data) {
+    $scope.company = data;
+  });
+}]);

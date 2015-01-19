@@ -1,9 +1,0 @@
-<table class="table table-condensed" ng-controller="CompanyCtrl">
-  <paper-input label="搜索公司" ng-model="name"></paper-input>
-
-  <tr ng-repeat="company in companies | filter:name">
-    <td>{{company[0]}}</td>
-    <td>{{company[1]}}</td>
-    <td><a ng-href="companies/{{company[0]}}">Link</a></td>
-  </tr>
-</table>
