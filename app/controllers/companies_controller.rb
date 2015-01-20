@@ -7,8 +7,6 @@ class CompaniesController < ApplicationController
     @company = Company.find_by_symbol(params[:id])
     @annual_income_statements = @company.annual_income_statements
     
-    gon.company = @company
-
     # TODO: biggest 3 historical spread (datetime, spread, volume)
     @connected_quote_arr = []
     temp_quote_arr = []

@@ -1,0 +1,11 @@
+<table class="table table-condensed">
+  <paper-input label="搜索公司" ng-model="name"></paper-input>
+
+  <tr ng-repeat="company in companies | filter:name">
+    <td>{{ company.name }}</td>
+    <td>{{ company.symbol }}</td>
+    <td>
+      <a ng-href="#{{ company.link }}">link</a>
+    </td>
+  </tr>
+</table>

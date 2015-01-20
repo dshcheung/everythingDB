@@ -1,3 +1,5 @@
-json.array! @companies do |c|
-  json.array! [c.symbol, c.name]
+json.companies @companies do |company|
+  json.name company.name
+  json.symbol company.symbol
+  json.link company_path(company)
 end

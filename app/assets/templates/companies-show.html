@@ -1,9 +1,9 @@
-<h3><%= "#{@company.name} (#{@company.symbol})" %></h3>
+<h3>{{ company.name }}</h3>
+<h3>{{ company.symbol }}</h3>
 
 <div id="companyPriceChart"></div>
 
-<div>
-  <% @connected_quote_arr.reverse.each do |group| %>
+<div ng-repeat="quotes in company.connectedQuotes">
     <table class="table table-condensed">
       <tr>
         <th>日期</th>
@@ -15,11 +15,18 @@
         <th>交易量</th>
       </tr>
 
-      <% group.reverse! %>
+      <tr ng-repeat="quote in quotes">
+        <td>{{ quote.date }}</td>
+        <td>{{ quote.date }}</td>
 
-      <% group.each_with_index do |quote, index| %>
-        <tr>
-          <td><%= quote.date.to_date %></td>
+        <td>{{ quote.open }}</td>
+        <td>{{ quote.close }}</td>
+        <td>{{ quote.high }}</td>
+        <td>{{ quote.low }}</td>
+        <td>{{ quote.volume }}</td>
+      </tr>
+       <!--  <tr>
+          <td>{{ quotes.date }}</td>
 
           <% if index != group.length - 1 %>
             <td>
@@ -34,24 +41,16 @@
           <td><%= quote.high %></td>
           <td><%= quote.low %></td>
           <td><%= quote.volume %></td>
-        </tr>
-      <% end %>
+        </tr> -->
+
     </table>
-  <% end %>
 </div>
 
-<% if @annual_income_statements.any? %>
-  <table class="table table-condensed">
-    <% AnnualIncomeStatement.columns[4..88].each_with_index do |column, index| %>
-      <tr>
-        <td><%= "#{column.name}" %></td>
-        <% @annual_income_statements.each do |statement| %>
-          <td><%= statement["#{column.name}"] %></td>
-        <% end %>
-      </tr>
-    <% end %>
-  </table>
-<% end %>
+<table class="table table-condensed">
+  <tr ng-repeat="incomes in company.annualIncomes">
+    {{ incomes }}
+  </tr>
+</table>
 
 <!-- <table class="table table-condensed">
   <tr>
