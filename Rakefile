@@ -4,4 +4,4 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-MoneyDB::Application.load_tasks
+EverythingDB::Application.load_tasks
