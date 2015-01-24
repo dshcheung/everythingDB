@@ -1,0 +1,24 @@
+'use strict';
+
+var app = angular.module('app', ['ngRoute']);
+
+app.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
+  $routeProvider.
+    when('/', {
+      templateUrl: "<%= asset_path('static_pages/home.html') %>",
+      controller: 'StaticPagesCtrl'
+    }).
+    when('/companies', {
+      templateUrl: "<%= asset_path('companies/list.html') %>",
+      controller: 'CompanyListCtrl'
+    }).
+    when('/companies/:symbol', {
+      templateUrl: "<%= asset_path('companies/show.html') %>",
+      controller: 'CompanyShowCtrl'
+    }).
+    otherwise({
+      redirectTo: '/'
+    });
+
+    $locationProvider.html5Mode(true);
+}]);
