@@ -37,7 +37,7 @@
         <tbody>
           <% @airline.airplanes.each do |airplane| %>
             <tr>
-              <td><%= link_to airplane.registration_code, airplane_path(@airline.iata, airplane.registration_code) %></td>
+              <td><%= link_to airplane.registration_code, api_v1_airplane_path(@airline.iata, airplane.registration_code) %></td>
               <td><%= airplane.plane_type %></td>
               <td><%= airplane.plane_type_code %></td>
               <td><%= airplane.mode_s %></td>

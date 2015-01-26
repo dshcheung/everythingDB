@@ -23,6 +23,6 @@
     </table>
   </div>
 
-  <div><%= link_to "Back to #{@airline.name}", airline_path(@airline.icao) %></div>
-  <div><%= link_to "Back to the list of Airlines", airlines_path %></div>
+  <div><%= link_to "Back to #{@airline.name}", api_v1_airline_path(@airline.icao) %></div>
+  <div><%= link_to "Back to the list of Airlines", api_v1_airlines_path %></div>
 </div>

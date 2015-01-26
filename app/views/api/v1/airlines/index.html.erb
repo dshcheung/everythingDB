@@ -16,7 +16,7 @@
             <% if airline.airplanes.empty? %>
               <td><%= airline.icao %></td>
             <% else %>
-              <td><%= link_to airline.icao, airline_path(airline.icao) %></td>
+              <td><%= link_to airline.icao, api_v1_airline_path(airline.icao) %></td>
             <% end %>
             <td><%= airline.iata %></td>
             <td><%= airline.name %></td>

@@ -40,7 +40,7 @@ namespace :scrape_flights do
 
     Airline.all.each_with_index do |airline, index|
       if index < 200    # ONLY SCRAPE THE FIRST 200!!
-        if Airline.airplanes?
+        if airline.airplanes.exists?
           puts "#{airline.name} already has listed airplanes"
         else
           document = open(airline.url).read
