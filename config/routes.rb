@@ -9,6 +9,12 @@ Rails.application.routes.draw do
     namespace :v1 do 
       resources :companies, only: [:show, :index]
       resources :daily_quotes, only: :show
+
+      get   '/airlines'                                   => 'airlines#index',  as: 'airlines'
+      get   '/airlines/:icao'                             => 'airlines#show',   as: 'airline'
+
+      get   '/airplanes'                                  => 'airplanes#index', as: 'airplanes'
+      get   '/airplanes/:airline_iata/:registration_code' => 'airplanes#show',  as: 'airplane'
     end
   end
   
