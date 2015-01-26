@@ -17,7 +17,7 @@ ActiveRecord::Schema.define(version: 20150126123651) do
     t.string   "name"
     t.string   "iata"
     t.string   "icao"
-    t.string   "url"
+    t.string   "flight_radar_url"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

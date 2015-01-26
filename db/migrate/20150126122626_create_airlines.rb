@@ -5,7 +5,7 @@ class CreateAirlines < ActiveRecord::Migration
       t.string :name
       t.string :iata
       t.string :icao
-      t.string :url
+      t.string :flight_radar_url
 
       t.timestamps
     end

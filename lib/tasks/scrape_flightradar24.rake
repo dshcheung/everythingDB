@@ -24,7 +24,7 @@ namespace :scrape_flights do
         new_airline["name"] = html_doc.css(data_format_name)[index].text
         new_airline["iata"] = iata_code
         new_airline["icao"] = html_doc.css(data_format_codes)[index]['data-icao'].squish
-        new_airline["url"] = "http://www.flightradar24.com" + html_doc.css(data_format_link)[index]['href']
+        new_airline["flight_radar_url"] = "http://www.flightradar24.com" + html_doc.css(data_format_link)[index]['href']
         new_airline.save
         puts "Done #{index+1} (#{new_airline["name"]})"
       end
@@ -43,7 +43,7 @@ namespace :scrape_flights do
         if airline.airplanes.exists?
           puts "#{airline.name} already has listed airplanes"
         else
-          document = open(airline.url).read
+          document = open(airline.flight_radar_url).read
           html_doc = Nokogiri::HTML(document)
 
           data_format_code = "ul#listAircrafts > li > a > p" # Airplane registration codes

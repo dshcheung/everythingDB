@@ -11,7 +11,8 @@ After migrating the db, run these commands to scrape the data:
 
 This is only currently getting the list of airlaines, their active airplanes and the basic information for these planes.
 
-##### Missing from FlightRadar24:
+##### TODO/Missing from FlightRadar24:
 
+* Change flight_radar_url to a simplified one (DRY DB)
 * List of airports (scrape by country?)
 * Last flights information for each airplane
