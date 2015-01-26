@@ -4,20 +4,25 @@ Rails.application.routes.draw do
 
   # You can have the root of your site routed with "root"
   root 'static_pages#index'
+    
+  namespace :api do 
+    namespace :v1 do 
+      resources :companies, only: [:show, :index]
+      resources :daily_quotes, only: :show
+    end
+  end
   
-  get 'daily_five_percent' => 'static_pages#daily_five_percent'
-  get 'two_day_five_percent' => 'static_pages#two_day_five_percent'
+  # get 'daily_five_percent' => 'static_pages#daily_five_percent'
+  # get 'two_day_five_percent' => 'static_pages#two_day_five_percent'
 
-  get '/test' => 'static_pages#test'
+  # get '/test' => 'static_pages#test'
 
-  resources :messages, only: :create
+  # resources :messages, only: :create
 
-  resources :tickers, only: :index
+  # resources :tickers, only: :index
+
+  get '/*path' => 'static_pages#index'
   
-  resources :daily_quotes, only: :show
-
-  resources :companies, only: [:show, :index]
-
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

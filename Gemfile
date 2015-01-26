@@ -18,11 +18,12 @@ gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.0.0'
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 # gem 'therubyracer',  platforms: :ruby
-# Use Angular as the JavaScript library
+# Use Jquery
 gem 'jquery-rails'
+# Use Angular
 gem 'angularjs-rails'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
-gem 'turbolinks'
+# gem 'turbolinks'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
@@ -32,17 +33,17 @@ gem 'sdoc', '~> 0.4.0',          group: :doc
 gem 'spring',        group: :development
 
 # PubSub in Rails
-gem "private_pub"
-gem "thin"
+# gem "private_pub"
+# gem "thin"
 
 # For JSON request
 gem 'httparty'
 
 # Material UI
 # gem 'polymer-rails', '~> 0.2.5'
-gem 'bower-rails'
-gem 'emcee'
-gem 'rails_12factor', group: :production
+# gem 'bower-rails'
+# gem 'emcee'
+# gem 'rails_12factor', group: :production
 
 group :development do
   gem 'better_errors'
@@ -62,7 +63,7 @@ gem 'roo'
 gem 'active_hash'
 
 # Pass variables to JS
-gem 'gon'
+# gem 'gon'
 
 # App Production Performance Monitor
 gem 'newrelic_rpm'
@@ -72,6 +73,12 @@ gem 'newrelic_rpm'
 
 # Use unicorn as the app server
 gem 'unicorn'
+
+# Use HighCharts
+# gem "highcharts-rails", "~> 3.0.0"
+
+# User HighStocks
+gem 'highstocks-rails', '~> 2.0.4'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
