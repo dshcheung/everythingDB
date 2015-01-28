@@ -1,0 +1,63 @@
+<div class="container">
+  <div class="row">
+    <h1>{{ airline.name }}</h1>
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>IATA Code</th>
+            <th>ICAO Code</th>
+            <th>Number of Active Airplaines</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{{ airline.iata }}</td>
+            <td>{{ airline.icao }}</td>
+            <td>{{ airline.airplanes_count }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+      
+    <h2>List of Airplanes</h2>
+    <div class="table-responsive" data-ng-show="airline.airplanes_count > 0">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Registration Code</th>
+            <th>Type</th>
+            <th>Type Code</th>
+            <th>ModeS</th>
+            <th>S/N</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr data-ng-repeat="airplane in airline.airplanes">
+            <td>{{ airplane.registration_code }}</td>
+            <td>{{ airplane.plane_type }}</td>
+            <td>{{ airplane.plane_type_code }}</td>
+            <td>{{ airplane.mode_s }}</td>
+            <td>{{ airplane.s_n }}</td>
+            <td>
+              <a data-ng-href="/airplanes/{{ airplane.registration_code }}" class="btn btn-xs btn-default">
+                See more details
+                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div data-ng-show="airline.airplanes_count == 0">
+      No airplanes listed yet.
+    </div>
+    <div>
+      <a data-ng-href="/airlines" class="btn btn-xs btn-default">
+        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+        Back to All Airlines
+      </a>
+    </div>
+  </div>
+</div>

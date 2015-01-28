@@ -16,6 +16,22 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
       templateUrl: "<%= asset_path('companies/show.html') %>",
       controller: 'CompanyShowCtrl'
     }).
+    when('/airlines', {
+      templateUrl: "<%= asset_path('airlines/list.html') %>",
+      controller: 'AirlineListCtrl'
+    }).
+    when('/airlines/:icao', {
+      templateUrl: "<%= asset_path('airlines/item.html') %>",
+      controller: 'AirlineItemCtrl'
+    }).
+    when('/airplanes', {
+      templateUrl: "<%= asset_path('airplanes/list.html') %>",
+      controller: 'AirplaneListCtrl'
+    }).
+    when('/airplanes/:registration_code', {
+      templateUrl: "<%= asset_path('airplanes/item.html') %>",
+      controller: 'AirplaneItemCtrl'
+    }).
     otherwise({
       redirectTo: '/'
     });

@@ -3,17 +3,11 @@ module Api
     class AirplanesController < ApplicationController
 
       def index
-        @airplanes = Airplane.all
-      end
-
-      def index_by_airline
-        @airline = Airline.find_by(:icao => params[:airline_icao])
-        @airplanes = @airline.airplanes
+        @airplanes = Airplane.includes(:airline).all
       end
 
       def show
-        @airline = Airline.find_by(:icao => params[:airline_icao])
-        @airplane = @airline.airplanes.find_by(:registration_code => params[:registration_code])
+        @airplane = Airplane.includes(:airline).find_by(:registration_code => params[:registration_code])
       end
 
     end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150126123651) do
+ActiveRecord::Schema.define(version: 20150128145008) do
 
   create_table "airlines", force: true do |t|
     t.string   "name"
@@ -20,6 +20,7 @@ ActiveRecord::Schema.define(version: 20150126123651) do
     t.string   "flight_radar_url"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "airplanes_count"
   end
 
   create_table "airplanes", force: true do |t|

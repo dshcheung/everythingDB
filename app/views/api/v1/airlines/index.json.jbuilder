@@ -3,5 +3,6 @@ json.airlines @airlines do |airline|
   json.icao airline.icao
   json.iata airline.iata
   json.flight_radar_url airline.flight_radar_url
-  json.link url_for(api_v1_airline_path(airline.icao))
+  json.airplanes_count airline.airplanes_count
+  json.airplanes airline.airplanes
 end

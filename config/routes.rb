@@ -10,12 +10,11 @@ Rails.application.routes.draw do
       resources :companies, only: [:show, :index]
       resources :daily_quotes, only: :show
 
-      get   '/airlines'                                   => 'airlines#index',              as: 'airlines'
-      get   '/airlines/:icao'                             => 'airlines#show',               as: 'airline'
+      get   '/airlines'                       => 'airlines#index',   as: 'airlines'
+      get   '/airlines/:icao'                 => 'airlines#show',    as: 'airline'
 
-      get   '/airplanes'                                  => 'airplanes#index',             as: 'airplanes'
-      get   '/airplanes/:airline_icao'                    => 'airplanes#index_by_airline',  as: 'airline_airplanes'
-      get   '/airplanes/:airline_icao/:registration_code' => 'airplanes#show',              as: 'airplane'
+      get   '/airplanes'                      => 'airplanes#index',  as: 'airplanes'
+      get   '/airplanes/:registration_code'   => 'airplanes#show',   as: 'airplane'
     end
   end
   
