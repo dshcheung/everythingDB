@@ -1,38 +1,36 @@
-<div class="container airplane-item">
+<div class="container airplanes-list">
   <div class="row">
-    <h1>{{ airplane.registration_code }}</h1>
-    <h2>Airline: {{ airplane.airline.name }}</h2>
+    <h1>List of Airplanes</h1>
     <div class="table-responsive">
       <table class="table">
         <thead>
           <tr>
+            <th>Airline</th>
             <th>Registration Code</th>
             <th>Type</th>
             <th>Type Code</th>
             <th>ModeS</th>
             <th>S/N</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
-          <tr>
+          <tr data-ng-repeat="airplane in airplanes">
+            <td>{{ airplane.airline.name }}</td>
             <td>{{ airplane.registration_code }}</td>
             <td>{{ airplane.plane_type }}</td>
             <td>{{ airplane.plane_type_code }}</td>
             <td>{{ airplane.mode_s }}</td>
             <td>{{ airplane.s_n }}</td>
+            <td>
+              <a data-ng-href="/airplanes/{{ airplane.registration_code }}" class="btn btn-xs btn-default">
+                See details
+                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+              </a>
+            </td>
           </tr>
         </tbody>
       </table>
-    </div>
-    <div>
-      <a data-ng-href="/airlines/{{ airplane.airline.icao }}" class="btn btn-xs btn-default">
-        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-        Back to {{ airplane.airline.name }}
-      </a>
-      <a data-ng-href="/airplanes" class="btn btn-xs btn-default">
-        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-        Back to All Airplanes
-      </a>
     </div>
   </div>
 </div>

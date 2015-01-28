@@ -17,9 +17,12 @@
             <td>{{ airline.icao }}</td>
             <td>{{ airline.iata }}</td>
             <td>{{ airline.name }}</td>
-            <td>{{ airline.number_of_airplanes }}</td>
+            <td>{{ airline.airplanes_count }}</td>
             <td>
-              <a data-ng-href="/airlines/{{ airline.icao }}" class="btn btn-xs btn-default">See all airplanes</a>
+              <a data-ng-href="/airlines/{{ airline.icao }}" class="btn btn-xs btn-default">
+                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                See all airplanes
+              </a>
             </td>
           </tr>
         </tbody>

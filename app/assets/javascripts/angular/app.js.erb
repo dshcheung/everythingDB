@@ -28,15 +28,10 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
       templateUrl: "<%= asset_path('airplanes/list.html') %>",
       controller: 'AirplaneListCtrl'
     }).
-    when('/airplanes/:airline_icao', {
-      templateUrl: "<%= asset_path('airplanes/list_by_airline.html') %>",
-      controller: 'AirlineAirplaneListCtrl'
-    }).
-    when('/airplanes/:airline_icao/:registration_code', {
+    when('/airplanes/:registration_code', {
       templateUrl: "<%= asset_path('airplanes/item.html') %>",
       controller: 'AirplaneItemCtrl'
     }).
-
     otherwise({
       redirectTo: '/'
     });
