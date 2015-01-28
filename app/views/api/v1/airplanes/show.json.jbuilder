@@ -4,4 +4,5 @@ json.airplanes [@airplane] do |airplane|
   json.plane_type_code airplane.plane_type_code
   json.plane_type airplane.plane_type
   json.s_n airplane.s_n
+  json.airline airplane.airline
 end
