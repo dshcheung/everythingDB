@@ -3,7 +3,7 @@ module Api
     class AirlinesController < ApplicationController
 
       def index
-        @airlines = Airline.all
+        @airlines = Airline.includes(:airplanes).all.limit(100)
       end
 
       def show

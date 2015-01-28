@@ -1,0 +1,29 @@
+<div class="container airlines-list">
+  <div class="row">
+    <h1>List of Airlines</h1>
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>ICAO</th>
+            <th>IATA</th>
+            <th>Airline Name</th>
+            <th>Number of Listed Airplanes</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr data-ng-repeat="airline in airlines">
+            <td>{{ airline.icao }}</td>
+            <td>{{ airline.iata }}</td>
+            <td>{{ airline.name }}</td>
+            <td>{{ airline.number_of_airplanes }}</td>
+            <td>
+              <a data-ng-href="/airlines/{{ airline.icao }}" class="btn btn-xs btn-default">See all airplanes</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

@@ -1,4 +1,5 @@
 app.controller('CompanyListCtrl', ['$scope', '$http', function($scope, $http){
+  console.log('hello from CompanyListCtrl');
   $http.get('api/v1/companies.json').success(function(data) {
     $scope.companies = data.companies;
   });
