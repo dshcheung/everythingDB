@@ -1,6 +1,6 @@
-namespace :stock do
+namespace :yahoo_finance do
   desc "Get daily price for all SZ companies"
-  task :daily => :environment do
+  task :daily_quotes => :environment do
 	  require 'nokogiri'
 	  require 'open-uri'
 	  require 'csv'
@@ -84,26 +84,6 @@ namespace :stock do
     end
 
     Company.update_all(:status => nil)
-
-  end
-
-  desc "Get all SZ companies into database"
-  task :sz => :environment do
-    xls = Roo::Spreadsheet.open('http://dimsumcloud.s3.amazonaws.com/sz.xlsx')
-
-    (2..xls.count).each do |i|
-      new_company = Exchange.find(1).companies.new
-
-      row = xls.row(i)
-      new_company.symbol = row[0]
-      new_company.name = row[1]
-
-      if new_company.save
-        puts "success"
-      else
-        puts "fail"
-      end
-    end
 
   end
 end

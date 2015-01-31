@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150128145008) do
+ActiveRecord::Schema.define(version: 20150131130831) do
 
   create_table "airlines", force: true do |t|
     t.string   "name"
@@ -34,8 +34,19 @@ ActiveRecord::Schema.define(version: 20150128145008) do
     t.datetime "updated_at"
   end
 
-  create_table "annual_income_statements", force: true do |t|
-    t.integer  "company_id"
+  create_table "american_companies", force: true do |t|
+    t.integer  "exchange_id"
+    t.string   "symbol"
+    t.string   "english_name"
+    t.string   "chinese_name"
+    t.text     "location"
+    t.datetime "ipo_date"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "chinese_annual_incomes", force: true do |t|
+    t.integer  "chinese_company_id"
     t.string   "currency"
     t.datetime "period"
     t.decimal  "xiao_shou_shou_ru"
@@ -127,17 +138,35 @@ ActiveRecord::Schema.define(version: 20150128145008) do
     t.datetime "updated_at"
   end
 
-  add_index "annual_income_statements", ["company_id", "period"], name: "index_annual_income_statements_on_company_id_and_period"
-  add_index "annual_income_statements", ["company_id"], name: "index_annual_income_statements_on_company_id"
-  add_index "annual_income_statements", ["period"], name: "index_annual_income_statements_on_period"
+  add_index "chinese_annual_incomes", ["chinese_company_id", "period"], name: "index_chinese_annual_incomes_on_chinese_company_id_and_period"
+  add_index "chinese_annual_incomes", ["chinese_company_id"], name: "index_chinese_annual_incomes_on_chinese_company_id"
+  add_index "chinese_annual_incomes", ["period"], name: "index_chinese_annual_incomes_on_period"
 
-  create_table "companies", force: true do |t|
+  create_table "chinese_companies", force: true do |t|
     t.integer  "exchange_id"
     t.string   "symbol"
-    t.string   "name"
+    t.string   "call_name"
+    t.string   "chinese_name"
+    t.string   "english_name"
+    t.text     "address"
+    t.string   "country"
+    t.string   "province"
+    t.string   "city"
+    t.string   "region"
+    t.string   "a_share_symbol"
+    t.string   "a_share_call_name"
+    t.datetime "a_ipo_date"
+    t.decimal  "a_share_total_issues"
+    t.decimal  "a_share_current_issues"
+    t.string   "b_share_symbol"
+    t.string   "b_share_call_name"
+    t.datetime "b_ipo_date"
+    t.decimal  "b_share_total_issues"
+    t.decimal  "b_share_current_issues"
+    t.string   "industry"
+    t.string   "website"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "status"
   end
 
   create_table "daily_quotes", force: true do |t|
@@ -148,76 +177,13 @@ ActiveRecord::Schema.define(version: 20150128145008) do
     t.decimal  "close"
     t.integer  "volume"
     t.decimal  "adj_close"
-    t.integer  "company_id"
+    t.integer  "daily_quotable_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "daily_quotes", ["company_id", "date"], name: "index_daily_quotes_on_company_id_and_date"
-  add_index "daily_quotes", ["company_id"], name: "index_daily_quotes_on_company_id"
+  add_index "daily_quotes", ["daily_quotable_id", "date"], name: "index_daily_quotes_on_daily_quotable_id_and_date"
+  add_index "daily_quotes", ["daily_quotable_id"], name: "index_daily_quotes_on_daily_quotable_id"
   add_index "daily_quotes", ["date"], name: "index_daily_quotes_on_date"
-
-  create_table "employers", force: true do |t|
-    t.string   "name"
-    t.string   "location"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "jobs", force: true do |t|
-    t.integer  "employer_id"
-    t.string   "jobsdb_id"
-    t.text     "position_about"
-    t.string   "position_name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "messages", force: true do |t|
-    t.string   "content"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "restaurants", force: true do |t|
-    t.string   "title"
-    t.text     "address"
-    t.string   "phonenumber"
-    t.string   "pricerange"
-    t.text     "tags"
-    t.text     "acceptedpayment"
-    t.integer  "seating"
-    t.text     "intro"
-    t.text     "description"
-    t.string   "district_id"
-    t.string   "cuisine_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "restaurants", ["cuisine_id"], name: "index_restaurants_on_cuisine_id"
-  add_index "restaurants", ["district_id", "cuisine_id"], name: "index_restaurants_on_district_id_and_cuisine_id"
-  add_index "restaurants", ["district_id"], name: "index_restaurants_on_district_id"
-
-  create_table "tickers", force: true do |t|
-    t.decimal  "mid"
-    t.decimal  "bid"
-    t.decimal  "ask"
-    t.decimal  "last_price"
-    t.decimal  "low"
-    t.decimal  "high"
-    t.decimal  "volume"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "youtube_urls", force: true do |t|
-    t.string   "title"
-    t.string   "youtube_code"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "youtube_urls", ["youtube_code"], name: "index_youtube_urls_on_youtube_code"
 
 end

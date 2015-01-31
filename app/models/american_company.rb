@@ -1,7 +1,6 @@
-class Company < ActiveRecord::Base
+class AmericanCompany < ActiveRecord::Base
   belongs_to :exchange
-  has_many :daily_quotes
-  has_many :annual_income_statements
+  has_many :daily_quotes, :as => :daily_quotable 
 
   validates_uniqueness_of :symbol, :scope => :exchange_id
 

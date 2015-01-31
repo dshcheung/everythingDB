@@ -1,3 +1,15 @@
 - id: 1
-  name: ShenZhen
+  name: Shenzhen Stock Exchange
   symbol: SZ
+- id: 2
+  name: Shanghai Stock Exchange
+  symbol: SH
+- id: 3
+  name: New York Stock Exchange
+  symbol: NYSE
+- id: 4
+  name: NASDAQ Stock Exchange
+  symbol: NASDAQ
+- id: 5
+  name: Toronto Stock Exchange
+  symbol: TSX

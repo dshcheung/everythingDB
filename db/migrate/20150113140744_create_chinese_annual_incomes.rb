@@ -1,7 +1,7 @@
-class CreateAnnualIncomeStatements < ActiveRecord::Migration
+class CreateChineseAnnualIncomes < ActiveRecord::Migration
   def change
-    create_table :annual_income_statements do |t|
-      t.integer :company_id
+    create_table :chinese_annual_incomes do |t|
+      t.integer :chinese_company_id
       
       t.string :currency
       t.datetime :period
@@ -96,8 +96,8 @@ class CreateAnnualIncomeStatements < ActiveRecord::Migration
       t.timestamps
     end
 
-    add_index :annual_income_statements, :period
-    add_index :annual_income_statements, :company_id
-    add_index :annual_income_statements, [:company_id, :period]
+    add_index :chinese_annual_incomes, :period
+    add_index :chinese_annual_incomes, :chinese_company_id
+    add_index :chinese_annual_incomes, [:chinese_company_id, :period]
   end
 end
