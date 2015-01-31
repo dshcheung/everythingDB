@@ -10,6 +10,7 @@ class CreateDailyQuotes < ActiveRecord::Migration
       t.decimal :adj_close
 
       t.integer :daily_quotable_id
+      t.string :daily_quotable_type
 
       t.timestamps
     end

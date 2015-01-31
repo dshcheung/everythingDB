@@ -178,6 +178,7 @@ ActiveRecord::Schema.define(version: 20150131130831) do
     t.integer  "volume"
     t.decimal  "adj_close"
     t.integer  "daily_quotable_id"
+    t.string   "daily_quotable_type"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
