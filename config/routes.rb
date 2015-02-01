@@ -7,7 +7,7 @@ Rails.application.routes.draw do
     
   namespace :api do 
     namespace :v1 do 
-      resources :companies, only: [:show, :index]
+      resources :chinese_companies, only: [:show, :index]
       resources :daily_quotes, only: :show
 
       get   '/airlines'                       => 'airlines#index',   as: 'airlines'
