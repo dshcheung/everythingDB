@@ -80,6 +80,14 @@ gem 'unicorn'
 # User HighStocks
 gem 'highstocks-rails', '~> 2.0.4'
 
+# Generate pretty API docs for your Rails APIs.
+gem 'rspec_api_documentation'
+
+# For BDD
+group :development, :test do
+  gem 'rspec-rails', '~> 3.0'
+end
+
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
