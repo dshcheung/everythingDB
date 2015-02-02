@@ -1,13 +1,5 @@
 class DailyQuote < ActiveRecord::Base
-  belongs_to :company
+  belongs_to :daily_quotable, :polymorphic => true
 
-  validates_uniqueness_of :date, :scope => :company_id
-
-  # scope :last_two_days, -> { where("date > ?", :two_days_ago) }
-
-  # private
-
-  #   def two_days_ago
-  #     2.days.ago
-  #   end
+  validates_uniqueness_of :date, :scope => :daily_quotable_id
 end

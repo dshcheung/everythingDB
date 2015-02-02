@@ -1,20 +1,23 @@
-namespace :scrape do
+namespace :google_finance do
   desc "Google Finance"
-  task :google => :environment do
+  task :chinese_financial_statements => :environment do
+    # Looping through all companies
     Company.all.each do |company|
       puts "#{company.name} - started scraping"
-      get_annual_income_statements(company)
+      get_all_annual_financial_statements(company)
     end
   end
 
-  def get_annual_income_statements(company)
+  def get_all_annual_financial_statements(company)
     require 'open-uri'
     require 'nokogiri'
 
+    # Retrieving all financial statements
     url = "http://www.google.com/finance?q=SHE:#{company.symbol}&fstype=ii"
     document = open(url).read
     html_doc = Nokogiri::HTML(document)
 
+    # Retrieving all annual income statements
     date_format = "div.id-incannualdiv > table.gf-table.rgt > thead > tr > th"
     dates = html_doc.css(date_format)
 

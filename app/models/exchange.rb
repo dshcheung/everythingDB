@@ -3,5 +3,6 @@ class Exchange < ActiveYaml::Base
 
   set_root_path "config"
 
-  has_many :companies
+  has_many :chinese_companies
+  has_many :american_companies
 end
