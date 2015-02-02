@@ -8,12 +8,12 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
       templateUrl: "<%= asset_path('static_pages/home.html') %>",
       controller: 'StaticPagesCtrl'
     }).
-    when('/companies', {
-      templateUrl: "<%= asset_path('companies/list.html') %>",
+    when('/chinese_companies', {
+      templateUrl: "<%= asset_path('chinese_companies/list.html') %>",
       controller: 'CompanyListCtrl'
     }).
-    when('/companies/:symbol', {
-      templateUrl: "<%= asset_path('companies/show.html') %>",
+    when('/chinese_companies/:symbol', {
+      templateUrl: "<%= asset_path('chinese_companies/show.html') %>",
       controller: 'CompanyShowCtrl'
     }).
     when('/airlines', {
