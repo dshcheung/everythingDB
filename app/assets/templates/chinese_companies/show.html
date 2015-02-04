@@ -1,78 +1,82 @@
-<h3>{{ company.name }}</h3>
-<h3>{{ company.symbol }}</h3>
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/">
+        everythingDB
+      </a>
+    </div>
+  </div>
+</nav>
 
-<div id="companyPriceChart"></div>
+<div class="container-fluid">
+  <div class="row">
 
-<div ng-repeat="quotes in company.connectedQuotes">
+    <div class="col-xs-3">
+      <a href="/chinese_companies" class="btn btn-inverse">Back to all companies</a>
+
+      <p>{{ company.english_name }} ({{ company.call_name }})</p>
+      <p>{{ company.symbol }}</p>
+
+      <p>{{ company.chinese_name }}</p>
+      <p>{{ company.country }}</p>
+      <p>{{ company.province }}</p>
+      <p>{{ company.city }}</p>
+
+      <p>{{ company.industry }}</p>
+      <p>{{ company.website }}</p>
+    </div>
+
+    <div class="col-xs-9">
+      <div id="companyPriceChart"></div>
+    </div>
+
+    <div ng-repeat="quotes in company.connectedQuotes">
+        <table class="table table-condensed">
+          <tr>
+            <th>日期</th>
+            <th>涨幅</th>
+            <th>开市价</th>
+            <th>收市价</th>
+            <th>高位</th>
+            <th>低位</th>
+            <th>交易量</th>
+          </tr>
+
+          <tr ng-repeat="quote in quotes">
+            <td>{{ quote.date }}</td>
+            <td>{{ quote.date }}</td>
+
+            <td>{{ quote.open }}</td>
+            <td>{{ quote.close }}</td>
+            <td>{{ quote.high }}</td>
+            <td>{{ quote.low }}</td>
+            <td>{{ quote.volume }}</td>
+          </tr>
+           <!--  <tr>
+              <td>{{ quotes.date }}</td>
+
+              <% if index != group.length - 1 %>
+                <td>
+                  <%= "#{ ((group[index].close - group[index+1].close) / group[index+1].close * 100).round(2) } %" %>
+                </td>
+              <% else %>
+                <td> - </td>
+              <% end %>
+
+              <td><%= quote.open %></td>
+              <td><%= quote.close %></td>
+              <td><%= quote.high %></td>
+              <td><%= quote.low %></td>
+              <td><%= quote.volume %></td>
+            </tr> -->
+
+        </table>
+    </div>
+
     <table class="table table-condensed">
-      <tr>
-        <th>日期</th>
-        <th>涨幅</th>
-        <th>开市价</th>
-        <th>收市价</th>
-        <th>高位</th>
-        <th>低位</th>
-        <th>交易量</th>
+      <tr ng-repeat="incomes in company.annualIncomes">
+        {{ incomes }}
       </tr>
-
-      <tr ng-repeat="quote in quotes">
-        <td>{{ quote.date }}</td>
-        <td>{{ quote.date }}</td>
-
-        <td>{{ quote.open }}</td>
-        <td>{{ quote.close }}</td>
-        <td>{{ quote.high }}</td>
-        <td>{{ quote.low }}</td>
-        <td>{{ quote.volume }}</td>
-      </tr>
-       <!--  <tr>
-          <td>{{ quotes.date }}</td>
-
-          <% if index != group.length - 1 %>
-            <td>
-              <%= "#{ ((group[index].close - group[index+1].close) / group[index+1].close * 100).round(2) } %" %>
-            </td>
-          <% else %>
-            <td> - </td>
-          <% end %>
-
-          <td><%= quote.open %></td>
-          <td><%= quote.close %></td>
-          <td><%= quote.high %></td>
-          <td><%= quote.low %></td>
-          <td><%= quote.volume %></td>
-        </tr> -->
-
     </table>
+  </div>
 </div>
-
-<table class="table table-condensed">
-  <tr ng-repeat="incomes in company.annualIncomes">
-    {{ incomes }}
-  </tr>
-</table>
-
-<!-- <table class="table table-condensed">
-  <tr>
-    <th>Date</th>
-    <th>%</th>
-    <th>Open</th>
-    <th>High</th>
-    <th>Low</th>
-    <th>Close</th>
-    <th>Volume</th>
-    <th>Adjusted Close</th>
-  </tr>
-  <% @company.daily_quotes.where("volume > 0").order(:date).reverse.each do |q| %>
-    <tr>
-      <td><%= q.date.to_date %></td>
-      <td><%= ((q.close - q.open) / q.open * 100).round(2) %></td>
-      <td><%= q.open %></td>
-      <td><%= q.high %></td>
-      <td><%= q.low %></td>
-      <td><%= q.close %></td>
-      <td><%= q.volume %></td>
-      <td><%= q.adj_close %></td>
-    </tr>
-  <% end %>
-</table> -->

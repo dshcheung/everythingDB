@@ -1,0 +1,114 @@
+app.controller('CompanyShowCtrl', ['$scope', '$http', '$routeParams', 'highChartConfig', function($scope, $http, $routeParams, highChartConfig){
+
+  var company_id = $routeParams.symbol;
+
+  $http.get('api/v1/chinese_companies/'+company_id).success(function(data) {
+    $scope.company = data;
+  });
+
+  $http.get('api/v1/chinese_companies/'+company_id+'/daily_quotes/').success(function(data){
+    graphChart(data, highChartConfig);
+  });
+  
+  function graphChart(data, highChartConfig){
+    // Apply the theme
+    Highcharts.setOptions(highChartConfig.theme);
+
+    var groupingUnits = [
+      [
+        'week',                         // unit name
+        [1]                             // allowed multiples
+      ], [
+        'month',
+        [1, 2, 3, 4, 6]
+      ]
+    ];
+
+    var volume = [];
+
+    data.forEach(function(element){
+      volume.push([element[0],element[5]]);
+    });
+
+    Highcharts.setOptions({
+      global: {
+        useUTC : false
+      }
+    });
+
+    // Create the chart
+    $('#companyPriceChart').highcharts('StockChart', {
+      chart: {
+        backgroundColor: 'transparent'
+      },
+
+      rangeSelector: {
+        inputEnabled: false,
+        selected: 0
+      },
+
+      xAxis: {
+        type: {
+          millisecond: '%H:%M:%S.%L',
+          second: '%H:%M:%S',
+          minute: '%H:%M',
+          hour: '%H:%M',
+          day: '%e. %b',
+          week: '%e. %b',
+          month: '%b \'%y',
+          year: '%Y'
+        }
+      },
+
+      yAxis: [{
+        labels: {
+            align: 'right',
+            x: -3
+        },
+        title: {
+            text: 'Daily Quotes (OHLC)'
+        },
+        height: '65%',
+        lineWidth: 2
+      }, {
+        labels: {
+            align: 'right',
+            x: -3
+        },
+        title: {
+            text: 'Volumn'
+        },
+        top: '65%',
+        height: '35%',
+        offset: 0,
+        lineWidth: 2
+      }],
+
+      title: {
+        text: 'Daily Quotes (OHLC)'
+      },
+
+      exporting: {
+        enabled: false
+      },
+
+      series: [{
+        name: 'Daily Quote',
+        type: 'ohlc',
+        data: data,
+        dataGrouping: {
+          units: groupingUnits
+        }
+      }, {
+        type: 'column',
+        name: 'Volume',
+        data: volume,
+        yAxis: 1,
+        dataGrouping: {
+            units: groupingUnits
+        }
+      }]
+    });
+  }
+}]);
+

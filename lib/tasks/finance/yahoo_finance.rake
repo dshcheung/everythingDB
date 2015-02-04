@@ -4,28 +4,16 @@ namespace :yahoo_finance do
 	  require 'nokogiri'
 	  require 'open-uri'
 	  require 'csv'
-    # CONN = ActiveRecord::Base.connection
 
-    exchange = Exchange.find(1)
+    exchange = Exchange.find(2)
     exchange_symbol = exchange.symbol.downcase
-    companies = exchange.companies
+    companies = exchange.chinese_companies
 
     companies.find_each(:batch_size => 5) do |company|
       stock = company.symbol
       url = "http://table.finance.yahoo.com/table.csv?s=#{stock}.#{exchange_symbol}"
 
-      catch (:done)  do
-        ActiveRecord::Base.transaction do
-          case company.status
-          when "in progress", "done", "no data"
-            puts "#{company.name} is already in progress or done or no data"
-            throw :done
-          else
-            company.update(:status => "in progress")
-            puts "#{company.name} started scraping"
-          end
-        end
-
+      catch (:done) do
         begin
           data = open(url)
           data = CSV.parse(data)
@@ -42,8 +30,7 @@ namespace :yahoo_finance do
             end
 
             if i == 0
-              puts "#{company.name} is already up to date"
-              company.update(:status => "done")
+              puts "#{company.call_name} is already up to date"
               throw :done
             else
               data = data[0..i-1]
@@ -51,8 +38,7 @@ namespace :yahoo_finance do
           end
 
         rescue
-          puts  "Cannot find data for #{company.name}"
-          company.update(:status => "no data")
+          puts  "Cannot find data for #{company.call_name}"
           throw :done
         end
 
@@ -76,14 +62,8 @@ namespace :yahoo_finance do
           end
         end
 
-        ActiveRecord::Base.transaction do
-          company.update(:status => "done")
-          puts "#{company.name} - Success"
-        end
+        puts "#{company.call_name} - Success"
       end
     end
-
-    Company.update_all(:status => nil)
-
   end
 end
