@@ -9,4 +9,8 @@ app.controller('CompanyShowCtrl', ['$scope', '$http', '$routeParams', 'highChart
   $http.get('api/v1/chinese_companies/'+company_id+'/daily_quotes/').success(function(data){
     highChartConfig.graphChart('#companyPriceChart', data);
   });
+
+  $http.get('api/v1/chinese_companies/'+company_id+'/income_statements/').success(function(data){
+    $scope.company.incomeStatements = data;
+  });
 }]);

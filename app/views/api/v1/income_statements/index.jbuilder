@@ -10,9 +10,7 @@ json.data do
 
 
     ChineseAnnualIncome.columns[4..88].each do |column|
-      json.data do
-        json.set!(column.name, income_statement[column.name])
-      end
+      json.set!(column.name, income_statement[column.name])
     end
   end
 end
