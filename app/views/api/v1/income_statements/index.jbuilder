@@ -1,5 +1,5 @@
 json.columns do
-  json.array! ChineseAnnualIncome.columns[4..87].map!{|x| x.name}
+  json.array! ChineseAnnualIncome.columns[4..88].map!{|x| x.name}
 end
 
 json.data do
@@ -9,7 +9,7 @@ json.data do
     json.currency income_statement.currency
 
 
-    ChineseAnnualIncome.columns[4..87].each do |column|
+    ChineseAnnualIncome.columns[4..88].each do |column|
       json.set!(column.name, income_statement[column.name])
     end
   end
