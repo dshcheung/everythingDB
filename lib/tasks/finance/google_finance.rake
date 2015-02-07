@@ -52,7 +52,7 @@ namespace :google_finance do
       new_record.period = period
       data = html_doc.css(format)
 
-      ChineseAnnualIncome.columns[4..88].each_with_index do |column, index|
+      ChineseAnnualIncome.columns[4..87].each_with_index do |column, index|
         new_record["#{column.name}"] = data[index].text.gsub(",","")
       end
 
