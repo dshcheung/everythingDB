@@ -4,8 +4,6 @@ namespace :make_companies do
     add_chinese_companies("http://dimsumcloud.s3.amazonaws.com/sz.xlsx", "SZ", "中国")
   end
 
-  # TODO
-  # SHANGHAI
   desc "Get all Shanghai (Chinese) companies into database"
   task :shanghai => :environment do
     require 'nokogiri'
@@ -22,8 +20,6 @@ namespace :make_companies do
     end
 
     # Update information for all Shanghai companies
-    success_count = 0
-    failure_count = 0
     Exchange.find_by_symbol(exchange_symbol).chinese_companies.each do |company|
       url = "http://biz.sse.com.cn/sseportal/webapp/datapresent/SSEQueryListCmpAct?reportName=QueryListCmpRpt&COMPANY_CODE=#{company.symbol}"
       begin
@@ -56,8 +52,6 @@ namespace :make_companies do
 
     # Open XLSX files with all information of ShenZhen companies
     xls = Roo::Spreadsheet.open(spreadsheet_url)
-    success_count = 0
-    failure_count = 0
 
     # Skip first row because it's headings
     (2..xls.count).each do |i|
@@ -103,14 +97,10 @@ namespace :make_companies do
 
       if new_company.save
         puts "Adding #{new_company.call_name} - Success"
-        success_count += 1
       else
         puts "Adding #{new_company.call_name} - Fail"
-        failure_count += 1
       end
     end
-
-    puts "#{success_count} successes, #{failure_count} failures"
   end
 
   def loop_through_shanghai_symbols(url, exchange_symbol)
@@ -179,10 +169,8 @@ namespace :make_companies do
     
     if company.save
       puts "Updating #{company.call_name} - Success"
-      success_count += 1
     else
       puts "Updating #{company.call_name} - Fail"
-      failure_count += 1
     end
   end
 end
