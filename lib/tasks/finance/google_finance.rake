@@ -2,8 +2,8 @@ namespace :google_finance do
   desc "Google Finance"
   task :chinese_financial_statements => :environment do
     # Looping through all companies
-    Company.all.each do |company|
-      puts "#{company.name} - started scraping"
+    ChineseCompany.all.each do |company|
+      puts "#{company.call_name} - started scraping"
       get_all_annual_financial_statements(company)
     end
   end
@@ -12,8 +12,15 @@ namespace :google_finance do
     require 'open-uri'
     require 'nokogiri'
 
+    case company.exchange_id
+    when 1
+      exchange_symbol = "SHE"
+    when 2
+      exchange_symbol = "SHA"
+    end
+
     # Retrieving all financial statements
-    url = "http://www.google.com/finance?q=SHE:#{company.symbol}&fstype=ii"
+    url = "http://www.google.com/finance?q=#{exchange_symbol}:#{company.symbol}&fstype=ii"
     document = open(url).read
     html_doc = Nokogiri::HTML(document)
 
@@ -22,7 +29,7 @@ namespace :google_finance do
     dates = html_doc.css(date_format)
 
     if dates.count < 2
-      puts "#{company.name} - no data <<<<<<<<<<<<<<<<<<<"
+      puts "#{company.call_name} - no data <<<<<<<<<<<<<<<<<<<"
       puts ">>>"
       return
     else
@@ -40,19 +47,22 @@ namespace :google_finance do
     formats.each_with_index do |format, index|
       period = dates[index+1].text.gsub("As of ", "")
 
-      new_record =  company.annual_income_statements.new
+      new_record =  company.chinese_annual_incomes.new
       new_record.currency = currency
       new_record.period = period
       data = html_doc.css(format)
 
-      AnnualIncomeStatement.columns[4..88].each_with_index do |column, index|
+      # Remove the duplicated column
+      data.delete(data[77])
+
+      ChineseAnnualIncome.columns[4..88].each_with_index do |column, index|
         new_record["#{column.name}"] = data[index].text.gsub(",","")
       end
 
       new_record.save
     end
 
-    puts "#{company.name} - finish scraping"
+    puts "#{company.call_name} - finish scraping"
     puts ">>>"
   end
 end

@@ -7,15 +7,16 @@ Rails.application.routes.draw do
     
   namespace :api do 
     namespace :v1 do 
-      resources :chinese_companies, only: [:show, :index] do
-        resources :daily_quotes, only: :index
+      resources :chinese_companies, :only => [:show, :index] do
+        resources :daily_quotes,      :only => :index
+        resources :income_statements, :only => :index
       end
 
-      get   '/airlines'                       => 'airlines#index',   as: 'airlines'
-      get   '/airlines/:icao'                 => 'airlines#show',    as: 'airline'
+      get '/airlines'                       => 'airlines#index',   as: 'airlines'
+      get '/airlines/:icao'                 => 'airlines#show',    as: 'airline'
 
-      get   '/airplanes'                      => 'airplanes#index',  as: 'airplanes'
-      get   '/airplanes/:registration_code'   => 'airplanes#show',   as: 'airplane'
+      get '/airplanes'                      => 'airplanes#index',  as: 'airplanes'
+      get '/airplanes/:registration_code'   => 'airplanes#show',   as: 'airplane'
     end
   end
   

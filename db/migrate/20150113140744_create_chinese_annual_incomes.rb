@@ -83,7 +83,6 @@ class CreateChineseAnnualIncomes < ActiveRecord::Migration
       t.decimal :kan_tan_kai_zhi
       t.decimal :qi_ta_ying_xiang_xiao_shou_shou_ru_de_xiang_mu
       t.decimal :qi_ta_ying_xiang_shou_chu_huo_wu_cheng_ben_de_xiang_mu
-      t.decimal :gui_shu_yu_shao_shu_gu_dong_quan_yi_de_zong_li_run
       t.decimal :he_bing_qian_bei_shou_gou_gong_si_de_li_run
       t.decimal :qi_ta_liu_cun_li_run_xiang_mu
       t.decimal :zong_xiao_shou_shou_ru
