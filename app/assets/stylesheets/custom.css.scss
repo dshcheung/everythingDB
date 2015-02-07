@@ -32,3 +32,12 @@
 .navbar.navbar-inverse{
   background-color: #40403C;
 }
+
+a.btn-inverse{
+  color: #bfbfbb;
+  border: 1px solid #bfbfbb;
+  &:hover{
+    color: white;
+    border: 1px solid white;
+  }
+}

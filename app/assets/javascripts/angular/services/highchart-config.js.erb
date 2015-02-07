@@ -1,37 +1,23 @@
-app.controller('CompanyListCtrl', ['$scope', '$http', function($scope, $http){
-  console.log('hello from CompanyListCtrl');
-  $http.get('api/v1/chinese_companies').success(function(data) {
-    $scope.companies = data.companies;
-  });
-}]);
+app.factory('highChartConfig', ['$http', function($http){
 
-app.controller('CompanyShowCtrl', ['$scope', '$http', '$routeParams', function($scope, $http, $routeParams){
+  var highchart = {};
 
-  var company_id = $routeParams.symbol;
+  // grouping unites
+  highchart.groupingUnits = [
+    [
+      'week',                         // unit name
+      [1]                             // allowed multiples
+    ], [
+      'month',
+      [1, 2, 3, 4, 6]
+    ]
+  ];
 
-  $http.get('api/v1/chinese_companies/'+company_id+'.json').success(function(data) {
-    $scope.company = data;
-  });
-
-  $http.get('api/v1/daily_quotes/'+company_id+'.json').success(function(data){
-    graphChart(data);
-  })
-}]);
-
-function graphChart(data){
   /**
-   * Dark theme for Highcharts JS
-   * @author Torstein Honsi
-   */
-
-  // Load the fonts
-  Highcharts.createElement('link', {
-     href: 'http://fonts.googleapi/v1s.com/css?family=Unica+One',
-     rel: 'stylesheet',
-     type: 'text/css'
-  }, null, document.getElementsByTagName('head')[0]);
-
-  Highcharts.theme = {
+  * Dark theme for Highcharts JS
+  * @author Torstein Honsi
+  */
+  highchart.theme = {
      colors: ["#2b908f", "#90ee7e", "#f45b5b", "#7798BF", "#aaeeee", "#ff0066", "#eeaaee",
         "#55BF3B", "#DF5353", "#7798BF", "#aaeeee"],
      chart: {
@@ -230,104 +216,91 @@ function graphChart(data){
      maskColor: 'rgba(255,255,255,0.3)'
   };
 
-  // Apply the theme
-  Highcharts.setOptions(Highcharts.theme);
+  // HighChart functions
+  highchart.graphChart = function(element, data){
+    // Apply the theme
+    Highcharts.setOptions(highchart.theme);
 
-  var groupingUnits = [
-    [
-      'week',                         // unit name
-      [1]                             // allowed multiples
-    ], [
-      'month',
-      [1, 2, 3, 4, 6]
-    ]
-  ];
+    var volume = [];
 
-  var volume = [];
+    data.forEach(function(element){
+      volume.push([element[0],element[5]]);
+    });
 
-  data.forEach(function(element){
-    volume.push([element[0],element[5]]);
-  });
-
-  console.log(volume);
-
-  Highcharts.setOptions({
-    global: {
-      useUTC : false
-    }
-  });
-
-  // Create the chart
-  $('#companyPriceChart').highcharts('StockChart', {
-    chart: {
-      backgroundColor: 'transparent'
-    },
-
-    rangeSelector: {
-      inputEnabled: false,
-      selected: 0
-    },
-
-    xAxis: {
-      type: {
-        millisecond: '%H:%M:%S.%L',
-        second: '%H:%M:%S',
-        minute: '%H:%M',
-        hour: '%H:%M',
-        day: '%e. %b',
-        week: '%e. %b',
-        month: '%b \'%y',
-        year: '%Y'
-      }
-    },
-
-    yAxis: [{
-      labels: {
-          align: 'right',
-          x: -3
+    // Create the chart
+    $(element).highcharts('StockChart', {
+      chart: {
+        backgroundColor: 'transparent'
       },
+
+      rangeSelector: {
+        inputEnabled: false,
+        selected: 0
+      },
+
+      xAxis: {
+        type: {
+          millisecond: '%H:%M:%S.%L',
+          second: '%H:%M:%S',
+          minute: '%H:%M',
+          hour: '%H:%M',
+          day: '%e. %b',
+          week: '%e. %b',
+          month: '%b \'%y',
+          year: '%Y'
+        }
+      },
+
+      yAxis: [{
+        labels: {
+            align: 'right',
+            x: -3
+        },
+        title: {
+            text: 'Daily Quotes (OHLC)'
+        },
+        height: '65%',
+        lineWidth: 2
+      }, {
+        labels: {
+            align: 'right',
+            x: -3
+        },
+        title: {
+            text: 'Volumn'
+        },
+        top: '65%',
+        height: '35%',
+        offset: 0,
+        lineWidth: 2
+      }],
+
       title: {
-          text: 'OHLC'
+        text: 'Daily Quotes (OHLC)'
       },
-      height: '65%',
-      lineWidth: 2
-    }, {
-      labels: {
-          align: 'right',
-          x: -3
+
+      exporting: {
+        enabled: false
       },
-      title: {
-          text: '交易量'
-      },
-      top: '65%',
-      height: '35%',
-      offset: 0,
-      lineWidth: 2
-    }],
 
-    title: {
-      text: 'K线'
-    },
+      series: [{
+        name: 'Daily Quote',
+        type: 'ohlc',
+        data: data,
+        dataGrouping: {
+          units: highchart.groupingUnits
+        }
+      }, {
+        type: 'column',
+        name: 'Volume',
+        data: volume,
+        yAxis: 1,
+        dataGrouping: {
+            units: highchart.groupingUnits
+        }
+      }]
+    });
+  }
 
-    exporting: {
-      enabled: false
-    },
-
-    series: [{
-      name: 'Daily Quote',
-      type: 'ohlc',
-      data: data,
-      dataGrouping: {
-        units: groupingUnits
-      }
-    }, {
-      type: 'column',
-      name: 'Volume',
-      data: volume,
-      yAxis: 1,
-      dataGrouping: {
-          units: groupingUnits
-      }
-    }]
-  });
-}
+  return highchart;
+}]);

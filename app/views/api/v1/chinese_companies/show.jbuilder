@@ -1,3 +1,5 @@
+json.symbol @company.symbol
+
 # name
 json.call_name @company.call_name
 json.chinese_name @company.chinese_name

@@ -13,13 +13,13 @@ namespace :make_companies do
 
     # Create new Shanghai companies based on symbols only
     url = "http://biz.sse.com.cn/sseportal/webapp/datapresent/SSEQueryStockInfoInitAct?reportName=BizCompStockInfoRpt&PRODUCTID=&PRODUCTJP=&PRODUCTNAME=&keyword=&CURSOR=1"
-    exchange_symbol = "SH"
+    exchange_symbol = "SS"
     loop_through_shanghai_symbols(url, exchange_symbol)
 
     # Update information for all Shanghai companies
     success_count = 0
     failure_count = 0
-    Exchange.find_by_symbol("SH").chinese_companies.each do |company|
+    Exchange.find_by_symbol(exchange_symbol).chinese_companies.each do |company|
       url = "http://biz.sse.com.cn/sseportal/webapp/datapresent/SSEQueryListCmpAct?reportName=QueryListCmpRpt&COMPANY_CODE=#{company.symbol}"
       document = open(url).read
       html_doc = Nokogiri::HTML(document)
