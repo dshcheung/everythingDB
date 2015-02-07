@@ -2,6 +2,17 @@ app.factory('highChartConfig', ['$http', function($http){
 
   var highchart = {};
 
+  // grouping unites
+  highchart.groupingUnits = [
+    [
+      'week',                         // unit name
+      [1]                             // allowed multiples
+    ], [
+      'month',
+      [1, 2, 3, 4, 6]
+    ]
+  ];
+
   /**
   * Dark theme for Highcharts JS
   * @author Torstein Honsi
@@ -204,6 +215,92 @@ app.factory('highChartConfig', ['$http', function($http){
      contrastTextColor: '#F0F0F3',
      maskColor: 'rgba(255,255,255,0.3)'
   };
+
+  // HighChart functions
+  highchart.graphChart = function(element, data){
+    // Apply the theme
+    Highcharts.setOptions(highchart.theme);
+
+    var volume = [];
+
+    data.forEach(function(element){
+      volume.push([element[0],element[5]]);
+    });
+
+    // Create the chart
+    $(element).highcharts('StockChart', {
+      chart: {
+        backgroundColor: 'transparent'
+      },
+
+      rangeSelector: {
+        inputEnabled: false,
+        selected: 0
+      },
+
+      xAxis: {
+        type: {
+          millisecond: '%H:%M:%S.%L',
+          second: '%H:%M:%S',
+          minute: '%H:%M',
+          hour: '%H:%M',
+          day: '%e. %b',
+          week: '%e. %b',
+          month: '%b \'%y',
+          year: '%Y'
+        }
+      },
+
+      yAxis: [{
+        labels: {
+            align: 'right',
+            x: -3
+        },
+        title: {
+            text: 'Daily Quotes (OHLC)'
+        },
+        height: '65%',
+        lineWidth: 2
+      }, {
+        labels: {
+            align: 'right',
+            x: -3
+        },
+        title: {
+            text: 'Volumn'
+        },
+        top: '65%',
+        height: '35%',
+        offset: 0,
+        lineWidth: 2
+      }],
+
+      title: {
+        text: 'Daily Quotes (OHLC)'
+      },
+
+      exporting: {
+        enabled: false
+      },
+
+      series: [{
+        name: 'Daily Quote',
+        type: 'ohlc',
+        data: data,
+        dataGrouping: {
+          units: highchart.groupingUnits
+        }
+      }, {
+        type: 'column',
+        name: 'Volume',
+        data: volume,
+        yAxis: 1,
+        dataGrouping: {
+            units: highchart.groupingUnits
+        }
+      }]
+    });
+  }
 
   return highchart;
 }]);
