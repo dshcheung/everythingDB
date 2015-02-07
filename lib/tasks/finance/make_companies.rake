@@ -14,56 +14,22 @@ namespace :make_companies do
     # Create new Shanghai companies based on symbols only
     url = "http://biz.sse.com.cn/sseportal/webapp/datapresent/SSEQueryStockInfoInitAct?reportName=BizCompStockInfoRpt&PRODUCTID=&PRODUCTJP=&PRODUCTNAME=&keyword=&CURSOR=1"
     exchange_symbol = "SS"
-    loop_through_shanghai_symbols(url, exchange_symbol)
+
+    begin
+      loop_through_shanghai_symbols(url, exchange_symbol)
+    rescue
+      puts "RESCUE >> #{url}"
+    end
 
     # Update information for all Shanghai companies
     success_count = 0
     failure_count = 0
     Exchange.find_by_symbol(exchange_symbol).chinese_companies.each do |company|
       url = "http://biz.sse.com.cn/sseportal/webapp/datapresent/SSEQueryListCmpAct?reportName=QueryListCmpRpt&COMPANY_CODE=#{company.symbol}"
-      document = open(url).read
-      html_doc = Nokogiri::HTML(document)
-
-      data = html_doc.css("table.content > tr > td:nth-child(2)")
-
-      # # name
-      company.call_name = data[4].text.split("/")[0].squish
-      company.chinese_name = data[5].text.split("\r\n")[0]
-      company.english_name = data[5].text.split("\r\n")[1]
-
-      # # location
-      company.address = data[6].text
-      company.country = "中国"
-      company.province = data[17].text
-      # company.city = 
-      # company.region = 
-
-      # # A Share Market Information
-      company.a_share_symbol = data[1].text.split("/")[0].squish
-      # company.a_share_call_name =
-      company.a_ipo_date = data[2].text
-      # company.a_share_total_issues =
-      # company.a_share_current_issues =
-
-      # # B Share Market Information
-      company.b_share_symbol = data[1].text.split("/")[1].squish
-      # company.b_share_call_name = 
-      # company.b_ipo_date = 
-      # company.b_share_total_issues = 
-      # company.b_share_current_issues = 
-
-      # # industry
-      company.industry = data[15].text
-
-      # # webiste
-      company.website = data[14].text
-      
-      if company.save
-        puts "Updating #{company.call_name} - Success"
-        success_count += 1
-      else
-        puts "Updating #{company.call_name} - Fail"
-        failure_count += 1
+      begin
+        update_shanghai_company(url, company)
+      rescue
+        puts "RESCUE >> #{company.call_name}"
       end
     end
   end
@@ -170,6 +136,53 @@ namespace :make_companies do
       puts "go to next page"
       url = "http://biz.sse.com.cn#{next_button[0]['href']}"
       loop_through_shanghai_symbols(url, exchange_symbol)
+    end
+  end
+
+  def update_shanghai_company(url, company)
+    document = open(url).read
+    html_doc = Nokogiri::HTML(document)
+
+    data = html_doc.css("table.content > tr > td:nth-child(2)")
+
+    # # name
+    company.call_name = data[4].text.split("/")[0].squish
+    company.chinese_name = data[5].text.split("\r\n")[0]
+    company.english_name = data[5].text.split("\r\n")[1]
+
+    # # location
+    company.address = data[6].text
+    company.country = "中国"
+    company.province = data[17].text
+    # company.city = 
+    # company.region = 
+
+    # # A Share Market Information
+    company.a_share_symbol = data[1].text.split("/")[0].squish
+    # company.a_share_call_name =
+    company.a_ipo_date = data[2].text
+    # company.a_share_total_issues =
+    # company.a_share_current_issues =
+
+    # # B Share Market Information
+    company.b_share_symbol = data[1].text.split("/")[1].squish
+    # company.b_share_call_name = 
+    # company.b_ipo_date = 
+    # company.b_share_total_issues = 
+    # company.b_share_current_issues = 
+
+    # # industry
+    company.industry = data[15].text
+
+    # # webiste
+    company.website = data[14].text
+    
+    if company.save
+      puts "Updating #{company.call_name} - Success"
+      success_count += 1
+    else
+      puts "Updating #{company.call_name} - Fail"
+      failure_count += 1
     end
   end
 end
